@@ -20,11 +20,11 @@ public class App extends Application
   public void start(Stage primaryStage) throws IOException
   {
     window = primaryStage;
-    // Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
-    Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
+    //Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
+    Scene login = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
 
     window.setTitle("Circolo Sportivo");
-    window.setScene(scene);
+    window.setScene(login);
     window.show();
   }
 

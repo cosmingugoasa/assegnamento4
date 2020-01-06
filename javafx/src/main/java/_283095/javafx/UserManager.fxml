@@ -6,7 +6,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="_283095.javafx.UserManager">
    <children>
-      <Button fx:id="btnIscriviti" layoutX="137.0" layoutY="308.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Iscriviti" />
+      <Button fx:id="btnIscriviti" layoutX="137.0" layoutY="308.0" mnemonicParsing="false" onAction="#Iscrizione" prefHeight="25.0" prefWidth="95.0" text="Iscriviti" />
       <Button fx:id="btnDisiscriversi" layoutX="483.0" layoutY="308.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Disiscriviti" />
       <ListView fx:id="lvAttivita" layoutX="27.0" layoutY="61.0" prefHeight="223.0" prefWidth="315.0" />
       <ListView fx:id="lvIscrizioni" layoutX="373.0" layoutY="61.0" prefHeight="223.0" prefWidth="315.0" />
