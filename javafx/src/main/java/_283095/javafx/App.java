@@ -12,13 +12,15 @@ public class App extends Application
 {
 
   private static final String fileFxml = "Login.fxml";
-  public static Stage window;
+  private static Stage window;
+  private static Amministratore admin;
+  private static Socio socio;
 
   @Override
   public void start(Stage primaryStage) throws IOException
   {
     window = primaryStage;
-    //Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
+    // Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
     Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
 
     window.setTitle("Circolo Sportivo");
@@ -30,4 +32,35 @@ public class App extends Application
   {
     launch(args);
   }
+
+  public static Stage getWindow()
+  {
+    return window;
+  }
+
+  public static void setWindow(Scene _scene)
+  {
+    window.setScene(_scene);
+  }
+
+  public static Amministratore getAdmin()
+  {
+    return admin;
+  }
+
+  public static void setAdmin(Amministratore _admin)
+  {
+    admin = _admin;
+  }
+
+  public static void setSocio(Socio _socio)
+  {
+    socio = _socio;
+  }
+
+  public static Socio getSocio()
+  {
+    return socio;
+  }
+
 }

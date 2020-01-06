@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="336.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="_283095.javafx.Login">
    <children>
-      <Button fx:id="btnLogin" layoutX="109.0" layoutY="185.0" mnemonicParsing="false" onAction="#Login" prefHeight="29.0" prefWidth="74.0" text="Login">
+      <Button fx:id="btnLogin" layoutX="109.0" layoutY="185.0" mnemonicParsing="false" onAction="#UserLogin" prefHeight="29.0" prefWidth="74.0" text="Login">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
