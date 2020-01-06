@@ -12,16 +12,18 @@ public class App extends Application
 {
 
   private static final String fileFxml = "Login.fxml";
+  public static Stage window;
 
   @Override
   public void start(Stage primaryStage) throws IOException
   {
-    Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
-    Scene scene = new Scene(root);
+    window = primaryStage;
+    //Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
+    Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
 
-    primaryStage.setTitle("Circolo Sportivo");
-    primaryStage.setScene(scene);
-    primaryStage.show();
+    window.setTitle("Circolo Sportivo");
+    window.setScene(scene);
+    window.show();
   }
 
   public static void main(String[] args)

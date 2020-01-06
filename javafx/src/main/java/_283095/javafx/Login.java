@@ -1,5 +1,6 @@
 package _283095.javafx;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,6 +9,8 @@ import java.sql.Statement;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -46,7 +49,7 @@ public class Login
   private Label lbAction;
 
   @FXML
-  void Login(ActionEvent event)
+  void Login(ActionEvent event) throws IOException
   {
     if (tbEmail.getText().contains("@") && !tbPwd.getText().isEmpty())
       // lbAction.setText("Bottone Premuto");
@@ -61,7 +64,7 @@ public class Login
 
   }
 
-  private void Login(final String email, final String pwd)
+  private void Login(final String email, final String pwd) throws IOException
   {
     try
     {
@@ -95,5 +98,4 @@ public class Login
       e.printStackTrace();
     }
   }
-
 }
