@@ -1,8 +1,6 @@
 package _283095.javafx;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -87,6 +85,8 @@ public class Login
           String lastName = rs.getString("name");
           System.out.println(lastName + "\n");
         }
+        Scene home = new Scene(FXMLLoader.load(getClass().getResource("UserManager.fxml")));
+        App.window.setScene(home);
       }
       else
         lbAction.setText("Errore Connessione");

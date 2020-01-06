@@ -19,10 +19,10 @@ public class App extends Application
   {
     window = primaryStage;
     //Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
-    Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
+    Scene login = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
 
     window.setTitle("Circolo Sportivo");
-    window.setScene(scene);
+    window.setScene(login);
     window.show();
   }
 
