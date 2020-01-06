@@ -15,12 +15,14 @@ import javafx.scene.control.TextField;
 
 public class Login
 {
+  /*
   private static final String DBURL = "mysql-loca.alwaysdata.net";
   String dbName = "loca_circolosportivo";
   private static final String LOGIN = "loca";
   private static final String PASSWORD = "prova98";
   String url = "jdbc:mysql://localhost:3306/";
   String driver = "com.mysql.cj.jdbc.Driver";
+  */
 
   @FXML
   private Button btnLogin;
@@ -63,16 +65,16 @@ public class Login
   {
     try
     {
-      Class.forName("com.mysql.cj.jdbc.Driver");
-      Connection con = DriverManager.getConnection(
+      //Class.forName("com.mysql.cj.jdbc.Driver");
+      /*Connection con = DriverManager.getConnection(
           "jdbc:mysql://mysql-loca.alwaysdata.net/loca_circolosportivo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-          LOGIN, PASSWORD);
+          LOGIN, PASSWORD);*/
 
-      if (con != null)
+      if (DBManager.getConnection() != null)
       {
         lbAction.setText("Connesso");
       }
-      Statement stmt = con.createStatement();
+      Statement stmt = DBManager.getConnection().createStatement();
       ResultSet rs = stmt.executeQuery("select * from PERSONA");
       while (rs.next())
       {
@@ -82,7 +84,7 @@ public class Login
       }
       //con.close();
     }
-    catch (SQLException | ClassNotFoundException e)
+    catch (SQLException e)
     {
       // TODO Auto-generated catch block
       e.printStackTrace();
