@@ -50,7 +50,7 @@ public class Login
   {
     if (tbEmail.getText().contains("@") && !tbPwd.getText().isEmpty())
       // lbAction.setText("Bottone Premuto");
-      Login("fa", "fe");
+      Login(tbEmail.getText(), tbPwd.getText());
     else
       lbAction.setText("Inserire correttamente i parametri");
   }
@@ -65,7 +65,7 @@ public class Login
   {
     try
     {
-      //Class.forName("com.mysql.cj.jdbc.Driver");
+      // Class.forName("com.mysql.cj.jdbc.Driver");
       /*Connection con = DriverManager.getConnection(
           "jdbc:mysql://mysql-loca.alwaysdata.net/loca_circolosportivo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
           LOGIN, PASSWORD);*/
@@ -73,16 +73,21 @@ public class Login
       if (DBManager.getConnection() != null)
       {
         lbAction.setText("Connesso");
+
+        Statement stmt = DBManager.getConnection().createStatement();
+        ResultSet rs = stmt
+            .executeQuery("SELECT * FROM PERSONA WHERE email = \"" + email
+                + "\" AND pwd = \"" + pwd + "\";");
+
+        while (rs.next())
+        {
+          String lastName = rs.getString("name");
+          System.out.println(lastName + "\n");
+        }
       }
-      Statement stmt = DBManager.getConnection().createStatement();
-      ResultSet rs = stmt.executeQuery("select * from PERSONA");
-      while (rs.next())
-      {
-        String lastName = rs.getString("name");
-        System.out.println(lastName + "\n");
-        
-      }
-      //con.close();
+      else
+        lbAction.setText("Errore Connessione");
+      // con.close();
     }
     catch (SQLException e)
     {
