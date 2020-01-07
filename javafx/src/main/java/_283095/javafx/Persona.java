@@ -45,7 +45,7 @@ public class Persona
 
   public String getRuolo()
   {
-    return this.pwd;
+    return this.ruolo;
   }
 
   public void Iscriviti(String item) throws SQLException

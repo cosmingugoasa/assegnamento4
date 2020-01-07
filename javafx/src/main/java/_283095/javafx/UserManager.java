@@ -42,7 +42,7 @@ public class UserManager
   @FXML
   void Iscrizione(ActionEvent event) throws SQLException
   {
-    if (App.getUser().getRuolo() == "Socio")
+    if (App.getUser().getRuolo().equals("Socio"))
       App.getUserSocio()
           .Iscriviti(lvAttivita.getSelectionModel().getSelectedItem());
     else
@@ -55,14 +55,15 @@ public class UserManager
   @FXML
   void Disiscrizione(ActionEvent event) throws SQLException
   {
-    if (App.getUser().getRuolo() == "Socio")
+    System.out.println(App.getUser().getRuolo());
+    if (App.getUser().getRuolo().equals("Socio"))
     {
       App.getUserSocio()
           .Disiscriviti(lvIscrizioni.getSelectionModel().getSelectedItem());
     }
-    else
+    else {
       App.getUserAdmin()
-          .Disiscriviti(lvIscrizioni.getSelectionModel().getSelectedItem());
+          .Disiscriviti(lvIscrizioni.getSelectionModel().getSelectedItem());}
     UpdateLists();
   }
 
