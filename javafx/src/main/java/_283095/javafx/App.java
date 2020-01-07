@@ -12,7 +12,7 @@ public class App extends Application
 {
 
   private static final String fileFxml = "Login.fxml";
-  private static Stage window;
+  static Stage window;
   private static Amministratore admin;
   private static Socio socio;
 
