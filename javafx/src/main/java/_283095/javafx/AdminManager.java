@@ -19,7 +19,7 @@ import javafx.stage.Window;
 
 public class AdminManager
 {
-  // public static List<Window> windows = new ArrayList<Window>();
+
   @FXML
   private ListView<String> lvUsers;
 
@@ -40,6 +40,15 @@ public class AdminManager
 
   @FXML
   private Button btnDeleteActivities;
+
+  @FXML
+  private Button btnRefreshList;
+
+  @FXML
+  void Refresh(ActionEvent event) throws SQLException, IOException
+  {
+    UpdateLists();
+  }
 
   @FXML
   void DeleteActivity(ActionEvent event)
@@ -107,8 +116,7 @@ public class AdminManager
   public void initialize() throws SQLException, IOException
   {
     System.out.println("Welcome to admin manager.");
-    // windows.add(App.getWindow());
-    UpdateLists();
+    // UpdateLists();
   }
 
   void UpdateLists() throws SQLException, IOException
