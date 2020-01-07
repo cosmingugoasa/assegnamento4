@@ -37,14 +37,15 @@ public class UserManager
   @FXML
   void Iscrizione(ActionEvent event) throws SQLException
   {
-    Statement stmt = DBManager.getConnection().createStatement();
+    Statement updateStm = DBManager.getConnection().createStatement();
     DBManager.getConnection().setAutoCommit(false); // start transaction block
-    stmt.executeUpdate(
+    updateStm.executeUpdate(
         "INSERT INTO `ISCRIZIONE`(`emailPersona`, `idAttivita`, `DATA`) VALUES ('"
             + "dax@gmail.com"
             + "', (SELECT ATTIVITA.id FROM ATTIVITA WHERE ATTIVITA.name = '"
             + lvAttivita.getSelectionModel().getSelectedItem() + "'),'"
             + LocalDateTime.now() + "')");
+    DBManager.getConnection().commit();
     DBManager.getConnection().setAutoCommit(true);
     UpdateLists();
   }
@@ -52,11 +53,12 @@ public class UserManager
   @FXML
   void Disiscrizione(ActionEvent event) throws SQLException
   {
-    Statement stmt = DBManager.getConnection().createStatement();
+    Statement updateStm = DBManager.getConnection().createStatement();
     DBManager.getConnection().setAutoCommit(false); // start transaction block
-    stmt.executeUpdate(
+    updateStm.executeUpdate(
         "DELETE FROM ISCRIZIONE WHERE emailPersona = 'dax@gmail.com' AND idAttivita = (SELECT ATTIVITA.id from ATTIVITA where ATTIVITA.name = '"
             + lvIscrizioni.getSelectionModel().getSelectedItem() + "')");
+    DBManager.getConnection().commit();
     DBManager.getConnection().setAutoCommit(true);
     UpdateLists();
   }
