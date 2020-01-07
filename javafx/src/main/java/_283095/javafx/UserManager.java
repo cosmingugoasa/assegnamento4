@@ -63,8 +63,19 @@ public class UserManager
     // lista attivita disponibili
     Statement stmt = DBManager.getConnection().createStatement();
     ResultSet rs = stmt.executeQuery(
-        "SELECT ATTIVITA.name FROM ATTIVITA, ISCRIZIONE WHERE ATTIVITA.id NOT IN (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
-            + "dax@gmail.com" + "') GROUP by ATTIVITA.name");
+        "SELECT * FROM ISCRIZIONE WHERE ISCRIZIONE.emailPersona = 'dax@gmail.com'");
+    if (rs.next() == false)
+    {
+      rs = stmt.executeQuery("SELECT ATTIVITA.name FROM ATTIVITA");
+    }
+    else
+    {
+      rs.close();
+      rs = stmt.executeQuery(
+          "SELECT ATTIVITA.name FROM ATTIVITA, ISCRIZIONE WHERE ATTIVITA.id NOT IN (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
+              + "dax@gmail.com" + "') GROUP by ATTIVITA.name");
+    }
+
     while (rs.next())
     {
       lvAttivita.getItems().add(rs.getString("name"));
