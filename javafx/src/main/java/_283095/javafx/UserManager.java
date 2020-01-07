@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -113,5 +111,4 @@ public class UserManager
         FXMLLoader.load(getClass().getResource("AdminManager.fxml")));
     App.setWindow(home);
   }
-
 }

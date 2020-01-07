@@ -48,8 +48,6 @@ public class Login
         Scene home = new Scene(
             FXMLLoader.load(getClass().getResource("UserManager.fxml")));
         App.setWindow(home);
-        if (App.getUserAdmin() == null)
-          System.out.println("vuoto");
       }
       else
         lbAction.setText("Email o Password Errati");

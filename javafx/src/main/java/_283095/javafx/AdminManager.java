@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class AdminManager
@@ -43,26 +44,6 @@ public class AdminManager
 
   @FXML
   private Button btnRefreshList;
-
-  @FXML
-  void Refresh(ActionEvent event) throws SQLException, IOException
-  {
-    UpdateLists();
-  }
-
-  @FXML
-  void DeleteActivity(ActionEvent event)
-  {
-
-  }
-
-  @FXML
-  void OpenAddActivity(ActionEvent event) throws IOException
-  {
-    Scene AddActivityWindow = new Scene(
-        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml")));
-    App.setWindow(AddActivityWindow);
-  }
 
   // ADD USER ELEMENTS
 
@@ -96,6 +77,26 @@ public class AdminManager
   private Button btnAddActivity;
 
   @FXML
+  void Refresh(ActionEvent event) throws SQLException, IOException
+  {
+    UpdateLists();
+  }
+
+  @FXML
+  void DeleteActivity(ActionEvent event)
+  {
+
+  }
+
+  @FXML
+  void OpenAddActivity(ActionEvent event) throws IOException
+  {
+    Scene AddActivityWindow = new Scene(
+        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml")));
+    App.setWindow(AddActivityWindow);
+  }
+
+  @FXML
   void CheckRace(ActionEvent event)
   {
 
@@ -115,8 +116,7 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    System.out.println("Welcome to admin manager.");
-    // UpdateLists();
+    UpdateLists();
   }
 
   void UpdateLists() throws SQLException, IOException
@@ -135,12 +135,19 @@ public class AdminManager
     }
 
     // lista di utenti
-    rs = stmt.executeQuery("SELECT PERSONA.name FROM PERSONA");
+    rs = stmt.executeQuery("SELECT PERSONA.name FROM PERSONA WHERE PERSONA.email <> '" + App.getUser().getEmail() + "'");
 
     while (rs.next())
     {
       lvUsers.getItems().add(rs.getString("name"));
     }
   }
-
+  
+  @FXML
+  void AddUser(ActionEvent event) throws IOException {
+    Stage addForm = new Stage();
+    addForm.setTitle("My New Stage Title");
+    addForm.setScene(new Scene(FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
+    addForm.show();
+  }
 }
