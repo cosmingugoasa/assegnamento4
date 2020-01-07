@@ -16,15 +16,6 @@ import javafx.scene.control.TextField;
 
 public class Login
 {
-  /*
-  private static final String DBURL = "mysql-loca.alwaysdata.net";
-  String dbName = "loca_circolosportivo";
-  private static final String LOGIN = "loca";
-  private static final String PASSWORD = "prova98";
-  String url = "jdbc:mysql://localhost:3306/";
-  String driver = "com.mysql.cj.jdbc.Driver";
-  */
-
   @FXML
   private Button btnLogin;
 
@@ -47,11 +38,21 @@ public class Login
   private Label lbAction;
 
   @FXML
-  void Login(ActionEvent event) throws IOException
+  void UserLogin(ActionEvent event) throws IOException
   {
     if (tbEmail.getText().contains("@") && !tbPwd.getText().isEmpty())
-      // lbAction.setText("Bottone Premuto");
-      Login(tbEmail.getText(), tbPwd.getText());
+    {
+
+      TryLogin(tbEmail.getText(), tbPwd.getText());
+      if (App.getAdmin() != null)
+      {
+        Scene home = new Scene(
+            FXMLLoader.load(getClass().getResource("UserManager.fxml")));
+        App.setWindow(home);
+      }
+      else
+        lbAction.setText("Email o Password Errati");
+    }
     else
       lbAction.setText("Inserire correttamente i parametri");
   }
@@ -62,15 +63,10 @@ public class Login
 
   }
 
-  private void Login(final String email, final String pwd) throws IOException
+  private void TryLogin(final String email, final String pwd) throws IOException
   {
     try
     {
-      // Class.forName("com.mysql.cj.jdbc.Driver");
-      /*Connection con = DriverManager.getConnection(
-          "jdbc:mysql://mysql-loca.alwaysdata.net/loca_circolosportivo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-          LOGIN, PASSWORD);*/
-
       if (DBManager.getConnection() != null)
       {
         lbAction.setText("Connesso");
@@ -82,8 +78,19 @@ public class Login
 
         while (rs.next())
         {
-          String lastName = rs.getString("name");
-          System.out.println(lastName + "\n");
+          switch (rs.getString("ruolo"))
+          {
+            case "Amministratore":
+              App.setAdmin(new Amministratore(rs.getString("name"),
+                  rs.getString("surname"), rs.getString("email"),
+                  rs.getString("pwd")));
+              break;
+            case "Socio":
+              App.setSocio(new Socio(rs.getString("name"),
+                  rs.getString("surname"), rs.getString("email"),
+                  rs.getString("pwd")));
+              break;
+          }
         }
         Scene home = new Scene(FXMLLoader.load(getClass().getResource("UserManager.fxml")));
         App.window.setScene(home);
@@ -94,7 +101,6 @@ public class Login
     }
     catch (SQLException e)
     {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
