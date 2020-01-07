@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="_283095.javafx.AdminManager">
+   <children>
+      <Label layoutX="27.0" layoutY="31.0" text="Name" />
+      <TextField fx:id="tfActivityName" layoutX="78.0" layoutY="27.0" />
+      <CheckBox fx:id="cbCourse" layoutX="292.0" layoutY="31.0" mnemonicParsing="false" text="Course" />
+      <CheckBox fx:id="cbRace" layoutX="417.0" layoutY="31.0" mnemonicParsing="false" text="Race" />
+   </children>
+</Pane>
