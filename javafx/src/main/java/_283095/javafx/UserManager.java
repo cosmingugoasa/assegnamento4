@@ -107,7 +107,7 @@ public class UserManager
   }
 
   @FXML
-  void ToggleAdminFunctions(ActionEvent event) throws IOException
+  void ToggleAdminFunctions(ActionEvent event) throws IOException, SQLException
   {
     Scene home = new Scene(
         FXMLLoader.load(getClass().getResource("AdminManager.fxml")));
