@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
+import com.mysql.cj.xdevapi.SessionFactory;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,12 +38,14 @@ public class UserManager
   void Iscrizione(ActionEvent event) throws SQLException
   {
     Statement stmt = DBManager.getConnection().createStatement();
+    DBManager.getConnection().setAutoCommit(false); // start transaction block
     stmt.executeUpdate(
         "INSERT INTO `ISCRIZIONE`(`emailPersona`, `idAttivita`, `DATA`) VALUES ('"
             + "dax@gmail.com"
             + "', (SELECT ATTIVITA.id FROM ATTIVITA WHERE ATTIVITA.name = '"
             + lvAttivita.getSelectionModel().getSelectedItem() + "'),'"
             + LocalDateTime.now() + "')");
+    DBManager.getConnection().setAutoCommit(true);
     UpdateLists();
   }
 
@@ -49,9 +53,11 @@ public class UserManager
   void Disiscrizione(ActionEvent event) throws SQLException
   {
     Statement stmt = DBManager.getConnection().createStatement();
+    DBManager.getConnection().setAutoCommit(false); // start transaction block
     stmt.executeUpdate(
         "DELETE FROM ISCRIZIONE WHERE emailPersona = 'dax@gmail.com' AND idAttivita = (SELECT ATTIVITA.id from ATTIVITA where ATTIVITA.name = '"
             + lvIscrizioni.getSelectionModel().getSelectedItem() + "')");
+    DBManager.getConnection().setAutoCommit(true);
     UpdateLists();
   }
 

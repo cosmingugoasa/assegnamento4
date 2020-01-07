@@ -12,15 +12,16 @@ public class App extends Application
 {
 
   private static final String fileFxml = "Login.fxml";
-  static Stage window;
+  private static Stage window;
   private static Amministratore admin;
   private static Socio socio;
+  private static boolean check; // true = admin e false = socio
 
   @Override
   public void start(Stage primaryStage) throws IOException
   {
     window = primaryStage;
-    //Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
+    // Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
     Scene login = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
 
     window.setTitle("Circolo Sportivo");
@@ -61,6 +62,16 @@ public class App extends Application
   public static Socio getSocio()
   {
     return socio;
+  }
+
+  public static void setCheck(boolean _check)
+  {
+    check = _check;
+  }
+
+  public static boolean getCheck()
+  {
+    return check;
   }
 
 }

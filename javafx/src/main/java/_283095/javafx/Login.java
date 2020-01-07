@@ -84,16 +84,19 @@ public class Login
               App.setAdmin(new Amministratore(rs.getString("name"),
                   rs.getString("surname"), rs.getString("email"),
                   rs.getString("pwd")));
+              App.setCheck(true);
               break;
             case "Socio":
-              App.setSocio(new Socio(rs.getString("name"),
-                  rs.getString("surname"), rs.getString("email"),
-                  rs.getString("pwd")));
+              App.setSocio(
+                  new Socio(rs.getString("name"), rs.getString("surname"),
+                      rs.getString("email"), rs.getString("pwd")));
+              App.setCheck(false);
               break;
           }
         }
-        Scene home = new Scene(FXMLLoader.load(getClass().getResource("UserManager.fxml")));
-        App.window.setScene(home);
+        Scene home = new Scene(
+            FXMLLoader.load(getClass().getResource("UserManager.fxml")));
+        App.setWindow(home);
       }
       else
         lbAction.setText("Errore Connessione");
