@@ -13,5 +13,6 @@
       <ListView fx:id="lvIscrizioni" layoutX="373.0" layoutY="61.0" prefHeight="223.0" prefWidth="315.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="34.0" prefHeight="17.0" prefWidth="315.0" text="Disponibili" textAlignment="CENTER" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="373.0" layoutY="34.0" prefHeight="17.0" prefWidth="315.0" text="I tuoi corsi/gare" textAlignment="CENTER" />
+      <Button fx:id="btnAdminFunctions" layoutX="308.0" layoutY="343.0" mnemonicParsing="false" onAction="#ToggleAdminFunctions" text="Admin Functions" />
    </children>
 </Pane>

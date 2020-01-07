@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
-import com.mysql.cj.xdevapi.SessionFactory;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,6 +19,9 @@ public class UserManager
 
   @FXML
   private Button btnDisiscriversi;
+  
+  @FXML
+  private Button btnAdminFunctions;
 
   @FXML
   private ListView<String> lvAttivita;
@@ -31,6 +32,9 @@ public class UserManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
+    if(App.getAdmin() == null) {
+      btnAdminFunctions.setVisible(false);
+    }
     UpdateLists();
   }
 
@@ -99,4 +103,10 @@ public class UserManager
       lvIscrizioni.getItems().add(rs.getString("name"));
     }
   }
+  
+  @FXML
+  void ToggleAdminFunctions(ActionEvent event) {
+
+  }
+
 }
