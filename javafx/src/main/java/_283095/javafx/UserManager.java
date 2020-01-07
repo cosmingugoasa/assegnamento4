@@ -29,7 +29,6 @@ public class UserManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    System.out.println("init called");
     UpdateLists();
   }
 
@@ -47,11 +46,12 @@ public class UserManager
   }
 
   void UpdateLists() throws SQLException {
+    lvAttivita.getItems().clear();
+    lvIscrizioni.getItems().clear();
     
     Statement stmt = DBManager.getConnection().createStatement();
     ResultSet rs = stmt.executeQuery(
-        "SELECT ATTIVITA.name FROM ATTIVITA, ISCRIZIONE WHERE ATTIVITA.id <> ISCRIZIONE.idAttivita AND ISCRIZIONE.emailPersona = '"
-            + "dax@gmail.com" + "'");
+        "SELECT ATTIVITA.name FROM ATTIVITA, ISCRIZIONE WHERE ATTIVITA.id NOT IN (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"+"dax@gmail.com"+"') GROUP by ATTIVITA.name");
     while (rs.next())
     {
       lvAttivita.getItems().add(rs.getString("name"));
@@ -59,7 +59,7 @@ public class UserManager
 
     // TODO lista di attività a cui è iscritto l'utente
     rs = stmt.executeQuery(
-        "SELECT ATTIVITA.name FROM `ATTIVITA` WHERE ATTIVITA.id = (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
+        "SELECT ATTIVITA.name FROM ATTIVITA WHERE ATTIVITA.id = ANY (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
             + "dax@gmail.com" + "')");
     
     while (rs.next())
