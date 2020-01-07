@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
@@ -19,7 +21,7 @@ public class UserManager
 
   @FXML
   private Button btnDisiscriversi;
-  
+
   @FXML
   private Button btnAdminFunctions;
 
@@ -32,7 +34,8 @@ public class UserManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    if(App.getAdmin() == null) {
+    if (App.getUser().getRuolo() == "Socio")
+    {
       btnAdminFunctions.setVisible(false);
     }
     UpdateLists();
@@ -41,29 +44,27 @@ public class UserManager
   @FXML
   void Iscrizione(ActionEvent event) throws SQLException
   {
-    Statement updateStm = DBManager.getConnection().createStatement();
-    DBManager.getConnection().setAutoCommit(false); // start transaction block
-    updateStm.executeUpdate(
-        "INSERT INTO `ISCRIZIONE`(`emailPersona`, `idAttivita`, `DATA`) VALUES ('"
-            + "dax@gmail.com"
-            + "', (SELECT ATTIVITA.id FROM ATTIVITA WHERE ATTIVITA.name = '"
-            + lvAttivita.getSelectionModel().getSelectedItem() + "'),'"
-            + LocalDateTime.now() + "')");
-    DBManager.getConnection().commit();
-    DBManager.getConnection().setAutoCommit(true);
+    if (App.getUser().getRuolo() == "Socio")
+      App.getUserSocio()
+          .Iscriviti(lvAttivita.getSelectionModel().getSelectedItem());
+    else
+      App.getUserAdmin()
+          .Iscriviti(lvAttivita.getSelectionModel().getSelectedItem());
+
     UpdateLists();
   }
 
   @FXML
   void Disiscrizione(ActionEvent event) throws SQLException
   {
-    Statement updateStm = DBManager.getConnection().createStatement();
-    DBManager.getConnection().setAutoCommit(false); // start transaction block
-    updateStm.executeUpdate(
-        "DELETE FROM ISCRIZIONE WHERE emailPersona = 'dax@gmail.com' AND idAttivita = (SELECT ATTIVITA.id from ATTIVITA where ATTIVITA.name = '"
-            + lvIscrizioni.getSelectionModel().getSelectedItem() + "')");
-    DBManager.getConnection().commit();
-    DBManager.getConnection().setAutoCommit(true);
+    if (App.getUser().getRuolo() == "Socio")
+    {
+      App.getUserSocio()
+          .Disiscriviti(lvIscrizioni.getSelectionModel().getSelectedItem());
+    }
+    else
+      App.getUserAdmin()
+          .Disiscriviti(lvIscrizioni.getSelectionModel().getSelectedItem());
     UpdateLists();
   }
 
@@ -75,7 +76,8 @@ public class UserManager
     // lista attivita disponibili
     Statement stmt = DBManager.getConnection().createStatement();
     ResultSet rs = stmt.executeQuery(
-        "SELECT * FROM ISCRIZIONE WHERE ISCRIZIONE.emailPersona = 'dax@gmail.com'");
+        "SELECT * FROM ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
+            + App.getUser().getEmail() + "'");
     if (rs.next() == false)
     {
       rs = stmt.executeQuery("SELECT ATTIVITA.name FROM ATTIVITA");
@@ -85,7 +87,7 @@ public class UserManager
       rs.close();
       rs = stmt.executeQuery(
           "SELECT ATTIVITA.name FROM ATTIVITA, ISCRIZIONE WHERE ATTIVITA.id NOT IN (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
-              + "dax@gmail.com" + "') GROUP by ATTIVITA.name");
+              + App.getUser().getEmail() + "') GROUP by ATTIVITA.name");
     }
 
     while (rs.next())
@@ -96,17 +98,20 @@ public class UserManager
     // lista di attività a cui è iscritto l'utente
     rs = stmt.executeQuery(
         "SELECT ATTIVITA.name FROM ATTIVITA WHERE ATTIVITA.id = ANY (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
-            + "dax@gmail.com" + "')");
+            + App.getUser().getEmail() + "')");
 
     while (rs.next())
     {
       lvIscrizioni.getItems().add(rs.getString("name"));
     }
   }
-  
-  @FXML
-  void ToggleAdminFunctions(ActionEvent event) {
 
+  @FXML
+  void ToggleAdminFunctions(ActionEvent event) throws IOException
+  {
+    Scene home = new Scene(
+        FXMLLoader.load(getClass().getResource("AdminManager.fxml")));
+    App.setWindow(home);
   }
 
 }

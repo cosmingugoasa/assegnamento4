@@ -13,9 +13,7 @@ public class App extends Application
 
   private static final String fileFxml = "Login.fxml";
   private static Stage window;
-  private static Amministratore admin;
-  private static Socio socio;
-  private static boolean check; // true = admin e false = socio
+  private static Persona user;
 
   @Override
   public void start(Stage primaryStage) throws IOException
@@ -44,34 +42,30 @@ public class App extends Application
     window.setScene(_scene);
   }
 
-  public static Amministratore getAdmin()
+  public static Persona getUser()
   {
-    return admin;
+    return user;
   }
 
-  public static void setAdmin(Amministratore _admin)
+  public static  void setUserAdmin(Amministratore _user)
   {
-    admin = _admin;
+    user = new Amministratore();
+    user = _user;
   }
 
-  public static void setSocio(Socio _socio)
+  public static Amministratore getUserAdmin()
   {
-    socio = _socio;
+    return (Amministratore) user;
+  }
+  
+  public static void setUserSocio(Socio _user)
+  {
+    user = new Socio();
+    user = _user;
   }
 
-  public static Socio getSocio()
+  public static Socio getUserSocio()
   {
-    return socio;
+    return (Socio) user;
   }
-
-  public static void setCheck(boolean _check)
-  {
-    check = _check;
-  }
-
-  public static boolean getCheck()
-  {
-    return check;
-  }
-
 }

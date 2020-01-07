@@ -42,13 +42,14 @@ public class Login
   {
     if (tbEmail.getText().contains("@") && !tbPwd.getText().isEmpty())
     {
-
-      TryLogin(tbEmail.getText(), tbPwd.getText());
-      if (App.getAdmin() != null)
+      if (TryLogin(tbEmail.getText(), tbPwd.getText()))
       {
+
         Scene home = new Scene(
             FXMLLoader.load(getClass().getResource("UserManager.fxml")));
         App.setWindow(home);
+        if (App.getUserAdmin() == null)
+          System.out.println("vuoto");
       }
       else
         lbAction.setText("Email o Password Errati");
@@ -63,7 +64,8 @@ public class Login
 
   }
 
-  private void TryLogin(final String email, final String pwd) throws IOException
+  private boolean TryLogin(final String email, final String pwd)
+      throws IOException
   {
     try
     {
@@ -75,36 +77,34 @@ public class Login
         ResultSet rs = stmt
             .executeQuery("SELECT * FROM PERSONA WHERE email = \"" + email
                 + "\" AND pwd = \"" + pwd + "\";");
-
         while (rs.next())
         {
           switch (rs.getString("ruolo"))
           {
             case "Amministratore":
-              App.setAdmin(new Amministratore(rs.getString("name"),
+              App.setUserAdmin(new Amministratore(rs.getString("name"),
                   rs.getString("surname"), rs.getString("email"),
-                  rs.getString("pwd")));
-              App.setCheck(true);
-              break;
+                  rs.getString("pwd"), rs.getString("ruolo")));
+              return true;
             case "Socio":
-              App.setSocio(
-                  new Socio(rs.getString("name"), rs.getString("surname"),
-                      rs.getString("email"), rs.getString("pwd")));
-              App.setCheck(false);
-              break;
+              App.setUserSocio(new Socio(rs.getString("name"),
+                  rs.getString("surname"), rs.getString("email"),
+                  rs.getString("pwd"), rs.getString("ruolo")));
+              return true;
           }
         }
-        Scene home = new Scene(
-            FXMLLoader.load(getClass().getResource("UserManager.fxml")));
-        App.setWindow(home);
+        return false;
       }
       else
+      {
         lbAction.setText("Errore Connessione");
-      // con.close();
+        return false;
+      }
     }
     catch (SQLException e)
     {
       e.printStackTrace();
     }
+    return false;
   }
 }
