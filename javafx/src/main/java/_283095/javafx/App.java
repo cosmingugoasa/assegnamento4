@@ -14,6 +14,7 @@ public class App extends Application
   private static final String fileFxml = "Login.fxml";
   private static Stage window;
   private static Persona user;
+  private static boolean adminInit = false;
 
   @Override
   public void start(Stage primaryStage) throws IOException
@@ -68,4 +69,13 @@ public class App extends Application
   {
     return (Socio) user;
   }
+  
+  public static boolean getInit() {
+    return adminInit;
+  }
+  
+  public static void setInit(boolean _status) {
+    adminInit = _status;
+  }
+  
 }

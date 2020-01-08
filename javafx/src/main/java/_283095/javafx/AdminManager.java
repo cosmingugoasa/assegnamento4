@@ -126,7 +126,11 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    // UpdateLists();
+    if (App.getInit() == false)
+    {
+      UpdateLists();
+      App.setInit(true);
+    }
   }
 
   void UpdateLists() throws SQLException, IOException
@@ -156,12 +160,18 @@ public class AdminManager
   }
 
   @FXML
-  void AddUser(ActionEvent event) throws IOException
+  void OpenAddUser(ActionEvent event) throws IOException
   {
     Stage addForm = new Stage();
     addForm.setTitle("My New Stage Title");
     addForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
     addForm.show();
+  }
+  
+  @FXML
+  void AddUser(ActionEvent event) throws SQLException {
+    Statement stmt = DBManager.getConnection().createStatement();
+    ResultSet rs = stmt.executeQuery("SELECT ATTIVITA.name FROM ATTIVITA");
   }
 }
