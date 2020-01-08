@@ -89,23 +89,33 @@ public class AdminManager
   }
 
   @FXML
-  void OpenAddActivity(ActionEvent event) throws IOException
+  void OpenAddActivity(ActionEvent event) throws IOException, SQLException
   {
-    Scene AddActivityWindow = new Scene(
-        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml")));
-    App.setWindow(AddActivityWindow);
+    
+    Stage addAttivita = new Stage();
+    addAttivita.setTitle("Add Activity");
+    addAttivita.setScene(new Scene(
+        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml"))));
+    addAttivita.show();
+    //UpdateLists();
   }
 
   @FXML
   void CheckRace(ActionEvent event)
   {
-
+    if (cbCourse.isSelected())
+    {
+      cbCourse.setSelected(false);
+    }
   }
 
   @FXML
   void checkCourse(ActionEvent event)
   {
-
+    if (cbRace.isSelected())
+    {
+      cbRace.setSelected(false);
+    }
   }
 
   @FXML
@@ -116,7 +126,7 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    UpdateLists();
+    // UpdateLists();
   }
 
   void UpdateLists() throws SQLException, IOException
@@ -135,19 +145,23 @@ public class AdminManager
     }
 
     // lista di utenti
-    rs = stmt.executeQuery("SELECT PERSONA.name FROM PERSONA WHERE PERSONA.email <> '" + App.getUser().getEmail() + "'");
+    rs = stmt.executeQuery(
+        "SELECT PERSONA.name FROM PERSONA WHERE PERSONA.email <> '"
+            + App.getUser().getEmail() + "'");
 
     while (rs.next())
     {
       lvUsers.getItems().add(rs.getString("name"));
     }
   }
-  
+
   @FXML
-  void AddUser(ActionEvent event) throws IOException {
+  void AddUser(ActionEvent event) throws IOException
+  {
     Stage addForm = new Stage();
     addForm.setTitle("My New Stage Title");
-    addForm.setScene(new Scene(FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
+    addForm.setScene(new Scene(
+        FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
     addForm.show();
   }
 }
