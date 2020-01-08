@@ -12,10 +12,11 @@
       <Label alignment="CENTER" layoutX="34.0" layoutY="41.0" prefHeight="17.0" prefWidth="263.0" text="Users" />
       <Label alignment="CENTER" layoutX="354.0" layoutY="41.0" prefHeight="17.0" prefWidth="263.0" text="Activities" />
       <Button fx:id="btnAddUser" layoutX="34.0" layoutY="288.0" mnemonicParsing="false" onAction="#OpenAddUser" prefHeight="25.0" prefWidth="50.0" text="Add" />
-      <Button fx:id="btnModUser" layoutX="139.0" layoutY="288.0" mnemonicParsing="false" text="Modify" />
-      <Button fx:id="btnDeleteUser" layoutX="243.0" layoutY="288.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="btnModUser" layoutX="139.0" layoutY="288.0" mnemonicParsing="false" onAction="#OpenModUser" text="Modify" />
+      <Button fx:id="btnDeleteUser" layoutX="243.0" layoutY="288.0" mnemonicParsing="false" onAction="#DeleteUser" text="Delete" />
       <Button fx:id="btnAddActivities" layoutX="411.0" layoutY="288.0" mnemonicParsing="false" onAction="#OpenAddActivity" prefHeight="25.0" prefWidth="50.0" text="Add" />
       <Button fx:id="btnDeleteActivities" layoutX="517.0" layoutY="288.0" mnemonicParsing="false" onAction="#DeleteActivity" text="Delete" />
       <Button fx:id="btnRefreshList" layoutX="290.0" layoutY="29.0" mnemonicParsing="false" onAction="#Refresh" text="Refresh List" />
+      <Label fx:id="lOperations" layoutX="289.0" layoutY="329.0" text=" " textFill="RED" />
    </children>
 </Pane>

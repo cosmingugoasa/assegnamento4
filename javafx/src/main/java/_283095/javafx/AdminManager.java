@@ -42,23 +42,33 @@ public class AdminManager
 
   @FXML
   private Button btnRefreshList;
+  
+  @FXML
+  private Label lOperations;
 
   // ADD USER ELEMENTS
+  Stage addForm = new Stage();
 
   @FXML
-  private TextField tfUserName;
+  private TextField tfUserName = new TextField();
 
   @FXML
-  private TextField tfUserSurname;
+  private TextField tfUserSurname  = new TextField();
 
   @FXML
-  private TextField tfUserMail;
+  private TextField tfUserMail  = new TextField();
 
   @FXML
-  private TextField tfUserPassword;
+  private TextField tfUserPassword  = new TextField();
+
+  @FXML
+  private CheckBox cbAdmin = new CheckBox();
 
   @FXML
   private Button btnConfirm;
+
+  @FXML
+  private Label lConfirmStatus;
 
   // ADD ACTIVITIES ELEMENTS
 
@@ -167,6 +177,7 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
+    System.out.println("Called INIT");
     if (App.getInit() == false)
     {
       UpdateLists();
@@ -203,17 +214,79 @@ public class AdminManager
   @FXML
   void OpenAddUser(ActionEvent event) throws IOException
   {
-    Stage addForm = new Stage();
-    addForm.setTitle("My New Stage Title");
+    addForm.setTitle("Add User Form");
     addForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
     addForm.show();
   }
 
   @FXML
-  void AddUser(ActionEvent event) throws SQLException
+  void OpenModUser(ActionEvent event) throws IOException, SQLException
+  {
+    addForm.setTitle("Mod User Form");
+    addForm.setScene(new Scene(
+        FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
+    addForm.show();
+    
+    Statement stmt = DBManager.getConnection().createStatement();
+    ResultSet rs = stmt
+        .executeQuery("SELECT * FROM PERSONA WHERE PERSONA.name = '"
+            + lvUsers.getSelectionModel().getSelectedItem() + "'");
+    if (rs.next())
+    {
+      tfUserName.setText(rs.getString("name"));
+      System.out.println(tfUserName.getText());
+      tfUserSurname.setText(rs.getString("surname"));
+      tfUserMail.setText(rs.getString("email"));
+      tfUserPassword.setText(rs.getString("pwd"));
+      if (rs.getString("ruolo") == "Amministratore")
+      {
+        cbAdmin.setSelected(true);
+      }
+    }
+  }
+
+  @FXML
+  void AddUser(ActionEvent event) throws SQLException, IOException
   {
     Statement stmt = DBManager.getConnection().createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT ATTIVITA.name FROM ATTIVITA");
+    int rs;
+
+    if (tfUserMail.getText().isEmpty() || tfUserName.getText().isEmpty()
+        || tfUserSurname.getText().isEmpty()
+        || tfUserPassword.getText().isEmpty())
+    {
+      lConfirmStatus.setText("Inputs not valid. Retry.");
+      return;
+    }
+
+    if (cbAdmin.isSelected())
+    {
+      rs = stmt.executeUpdate(
+          "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
+              + tfUserMail.getText() + "','" + tfUserName.getText() + "','"
+              + tfUserSurname.getText() + "','" + tfUserPassword.getText()
+              + "','" + "Amministratore" + "')");
+    }
+    else
+    {
+      rs = stmt.executeUpdate(
+          "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
+              + tfUserMail.getText() + "','" + tfUserName.getText() + "','"
+              + tfUserSurname.getText() + "','" + tfUserPassword.getText()
+              + "','" + "Socio" + "')");
+    }
+
+    ((Stage) btnConfirm.getScene().getWindow()).close();
+  }
+  
+  @FXML
+  void DeleteUser(ActionEvent event) throws SQLException, IOException {
+    Statement stmt = DBManager.getConnection().createStatement();
+    int rs = stmt.executeUpdate("DELETE FROM PERSONA WHERE PERSONA.name = '" + lvUsers.getSelectionModel().getSelectedItem() + "'");
+    if(rs == 1) {
+      lOperations.setText("User deleted.");
+      UpdateLists();
+    }
   }
 }
