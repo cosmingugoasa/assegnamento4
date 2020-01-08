@@ -100,23 +100,33 @@ public class AdminManager
   }
 
   @FXML
-  void OpenAddActivity(ActionEvent event) throws IOException
+  void OpenAddActivity(ActionEvent event) throws IOException, SQLException
   {
-    Scene AddActivityWindow = new Scene(
-        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml")));
-    App.setWindow(AddActivityWindow);
+    
+    Stage addAttivita = new Stage();
+    addAttivita.setTitle("Add Activity");
+    addAttivita.setScene(new Scene(
+        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml"))));
+    addAttivita.show();
+    //UpdateLists();
   }
 
   @FXML
   void CheckRace(ActionEvent event)
   {
-
+    if (cbCourse.isSelected())
+    {
+      cbCourse.setSelected(false);
+    }
   }
 
   @FXML
   void checkCourse(ActionEvent event)
   {
-
+    if (cbRace.isSelected())
+    {
+      cbRace.setSelected(false);
+    }
   }
 
   @FXML
