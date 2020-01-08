@@ -6,12 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="_283095.javafx.AdminManager">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="_283095.javafx.AdminManager">
    <children>
       <Label layoutX="27.0" layoutY="31.0" text="Name" />
       <TextField fx:id="tbNameActivity" layoutX="69.0" layoutY="27.0" />
       <CheckBox fx:id="cbCourse" layoutX="292.0" layoutY="31.0" mnemonicParsing="false" onAction="#checkCourse" text="Course" />
       <CheckBox fx:id="cbRace" layoutX="417.0" layoutY="31.0" mnemonicParsing="false" onAction="#CheckRace" text="Race" />
       <Button fx:id="btnAddActivity" layoutX="514.0" layoutY="28.0" mnemonicParsing="false" onAction="#addActivity" text="Add" />
+      <Label fx:id="lbStatus" layoutX="160.0" layoutY="65.0" prefHeight="18.0" prefWidth="228.0" />
    </children>
 </Pane>
