@@ -22,7 +22,7 @@ public class AdminManager
   //admin buttons
   
   @FXML
-  private static ListView<String> lvUsers;
+  private ListView<String> lvUsers;
 
   @FXML
   private ListView<String> lvAttivita;
@@ -118,7 +118,7 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    
+    UpdateLists();
   }
 
   void UpdateLists() throws SQLException, IOException
@@ -213,8 +213,8 @@ public class AdminManager
       lOperations.setText("Selezionare L'utente");
   }
 
-  public static ListView<String> getLvUsers()
+  /*public static ListView<String> getLvUsers()
   {
     return lvUsers;
-  }
+  }*/
 }
