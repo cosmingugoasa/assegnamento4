@@ -17,5 +17,6 @@
       <Button fx:id="btnAddActivities" layoutX="411.0" layoutY="288.0" mnemonicParsing="false" onAction="#OpenAddActivity" prefHeight="25.0" prefWidth="50.0" text="Add" />
       <Button fx:id="btnDeleteActivities" layoutX="517.0" layoutY="288.0" mnemonicParsing="false" onAction="#DeleteActivity" text="Delete" />
       <Button fx:id="btnRefreshList" layoutX="290.0" layoutY="29.0" mnemonicParsing="false" onAction="#Refresh" text="Refresh List" />
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#BackToUserManager" prefHeight="25.0" prefWidth="25.0" text="&lt;" />
    </children>
 </Pane>

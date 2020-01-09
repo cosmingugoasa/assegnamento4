@@ -49,6 +49,9 @@ public class AdminManager
 
   @FXML
   private Button btnRefreshList;
+  
+  @FXML
+  private Button btnBack;
 
   static String selectedMail;
 
@@ -202,6 +205,13 @@ public class AdminManager
       alert.setContentText("Selezionare L'utente");
       alert.showAndWait();
     }
+  }
+  
+  @FXML
+  void BackToUserManager(ActionEvent event) throws IOException {
+    Scene home = new Scene(
+        FXMLLoader.load(getClass().getResource("UserManager.fxml")));
+    App.setWindow(home);
   }
 
   public static String getSelectedEmail()
