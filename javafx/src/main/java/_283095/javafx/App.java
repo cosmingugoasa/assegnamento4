@@ -11,17 +11,14 @@ import javafx.stage.Stage;
 public class App extends Application
 {
 
-  private static final String fileFxml = "Login.fxml";
   private static Stage window;
   private static Persona user;
-  private static boolean adminInit = false;
 
   @Override
   public void start(Stage primaryStage) throws IOException
   {
     window = primaryStage;
-    // Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
-    Scene login = new Scene(FXMLLoader.load(getClass().getResource(fileFxml)));
+    Scene login = new Scene(FXMLLoader.load(getClass().getResource("Login.fxml")));
 
     window.setTitle("Circolo Sportivo");
     window.setScene(login);
@@ -68,14 +65,6 @@ public class App extends Application
   public static Socio getUserSocio()
   {
     return (Socio) user;
-  }
-  
-  public static boolean getInit() {
-    return adminInit;
-  }
-  
-  public static void setInit(boolean _status) {
-    adminInit = _status;
   }
   
 }

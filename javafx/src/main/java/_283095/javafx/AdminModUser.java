@@ -12,54 +12,82 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class AdminModUser {
+public class AdminModUser
+{
 
-    @FXML
-    private TextField tfUserName;
+  @FXML
+  private TextField tfUserName;
 
-    @FXML
-    private TextField tfUserSurname;
+  @FXML
+  private TextField tfUserSurname;
 
-    @FXML
-    private TextField tfUserMail;
+  @FXML
+  private TextField tfUserMail;
 
-    @FXML
-    private Button btnConfirm;
+  @FXML
+  private Button btnConfirm;
 
-    @FXML
-    private CheckBox cbAdmin;
+  @FXML
+  private CheckBox cbAdmin;
 
-    @FXML
-    private Label lConfirmStatus;
+  @FXML
+  private Label lConfirmStatus;
 
-    @FXML
-    private PasswordField tfUserPassword;
+  @FXML
+  private PasswordField tfUserPassword;
 
-    @FXML
-    public void initialize() throws SQLException, IOException
+  ResultSet selected;
+  
+  @FXML
+  public void initialize() throws SQLException, IOException
+  {
+    System.out.println("Mod INIT");
+    Statement stmt = DBManager.getConnection().createStatement();
+    selected = stmt.executeQuery(
+        "SELECT * FROM PERSONA WHERE PERSONA.email = 'sava@gmail.com'");/*
+                                                                        + AdminManager.getLvUsers().getSelectionModel().getSelectedItem() + "'");*/
+    if (selected.next())
     {
-      System.out.println("Mod INIT");
-      Statement stmt = DBManager.getConnection().createStatement();
-      ResultSet rs = stmt
-          .executeQuery("SELECT * FROM PERSONA WHERE PERSONA.email = '"
-              + AdminManager.getLvUsers().getSelectionModel().getSelectedItem() + "'");
-      if (rs.next())
+      tfUserName.setText(selected.getString("name"));
+      tfUserSurname.setText(selected.getString("surname"));
+      tfUserMail.setText(selected.getString("email"));
+      tfUserPassword.setText(selected.getString("pwd"));
+      if (selected.getString("ruolo") == "Amministratore")
       {
-        tfUserName.setText(rs.getString("name"));
-        tfUserSurname.setText(rs.getString("surname"));
-        tfUserMail.setText(rs.getString("email"));
-        tfUserPassword.setText(rs.getString("pwd"));
-        if (rs.getString("ruolo") == "Amministratore")
-        {
-          cbAdmin.setSelected(true);
-        }
+        cbAdmin.setSelected(true);
       }
     }
-    
-    @FXML
-    void ModUser(ActionEvent event) {
+  }
 
+  @FXML
+  void ModUser(ActionEvent event) throws SQLException
+  {
+    String ruolo;
+    if (cbAdmin.isSelected())
+    {
+      ruolo = "Amministratore";
     }
+    else
+    {
+      ruolo = "Socio";
+    }
+    
+    Statement stmt = DBManager.getConnection().createStatement();
+    int rs = stmt
+        .executeUpdate("UPDATE `PERSONA` SET `email`='" + tfUserMail.getText()
+            + "',`name`='" + tfUserName.getText() + "',`surname`='"
+            + tfUserSurname.getText() + "',`pwd`='" + tfUserPassword.getText()
+            + "',`ruolo`='" + ruolo + "' WHERE PERSONA.email = '"
+            + selected.getString("email")
+            + "'");
+    
+    if(rs == 1) {
+      ((Stage) btnConfirm.getScene().getWindow()).close();
+    }else {
+      lConfirmStatus.setText("Query error.");
+    }
+  }
 
 }

@@ -119,7 +119,7 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    System.out.println("AdminManager INIT");
+   
   }
 
   void UpdateLists() throws SQLException, IOException
@@ -159,42 +159,36 @@ public class AdminManager
   @FXML
   void OpenModUser(ActionEvent event) throws IOException, SQLException
   {
-    mod = true;
     addForm.setTitle("Mod User Form");
     addForm.setScene(new Scene(
-        FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
+        FXMLLoader.load(getClass().getResource("AdminModUser.fxml"))));
     addForm.show();
   }
 
   @FXML
   void AddUser(ActionEvent event) throws SQLException, IOException
   {
-    if (mod == false)
+    if (!tfUserMail.getText().isEmpty() || !tfUserName.getText().isEmpty()
+        || !tfUserSurname.getText().isEmpty()
+        || !tfUserPassword.getText().isEmpty())
     {
-      if (!tfUserMail.getText().isEmpty() || !tfUserName.getText().isEmpty()
-          || !tfUserSurname.getText().isEmpty()
-          || !tfUserPassword.getText().isEmpty())
-      {
-        String ruolo;
-        if (cbAdmin.isSelected())
-          ruolo = "Amministratore";
-        else
-          ruolo = "Socio";
+      String ruolo;
+      if (cbAdmin.isSelected())
+        ruolo = "Amministratore";
+      else
+        ruolo = "Socio";
 
-        if (App.getUserAdmin().addUser(tfUserMail.getText(),
-            tfUserName.getText(), tfUserSurname.getText(),
-            tfUserPassword.getText(), ruolo))
-        {
-          ((Stage) btnConfirm.getScene().getWindow()).close();
-          // UpdateLists();
-        }
-        else
-          lConfirmStatus.setText("Errore Inserimento Utente");
+      if (App.getUserAdmin().addUser(tfUserMail.getText(), tfUserName.getText(),
+          tfUserSurname.getText(), tfUserPassword.getText(), ruolo))
+      {
+        ((Stage) btnConfirm.getScene().getWindow()).close();
+        // UpdateLists();
       }
       else
-        lConfirmStatus.setText("Inputs not valid. Retry.");
-
+        lConfirmStatus.setText("Errore Inserimento Utente");
     }
+    else
+      lConfirmStatus.setText("Inputs not valid. Retry.");
   }
 
   @FXML
@@ -216,8 +210,9 @@ public class AdminManager
     else
       lOperations.setText("Selezionare L'utente");
   }
-  
-  public static ListView<String> getLvUsers() {
+
+  public static ListView<String> getLvUsers()
+  {
     return lvUsers;
   }
 }
