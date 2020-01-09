@@ -43,12 +43,10 @@ public class AdminModUser
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    System.out.println("Mod INIT");
     Statement stmt = DBManager.getConnection().createStatement();
     selected = stmt.executeQuery(
-        "SELECT * FROM PERSONA WHERE PERSONA.email = 'sava@gmail.com'");/*
-                                                                        + AdminManager.getLvUsers().getSelectionModel().getSelectedItem() + "'");*/
-    if (selected.next())
+        "SELECT * FROM PERSONA WHERE PERSONA.email = '" + AdminManager.getSelectedEmail() + "'");
+    if (selected.next() != false)
     {
       tfUserName.setText(selected.getString("name"));
       tfUserSurname.setText(selected.getString("surname"));
@@ -58,6 +56,10 @@ public class AdminModUser
       {
         cbAdmin.setSelected(true);
       }
+    }
+    else {
+      lConfirmStatus.setText("User not found.");
+      btnConfirm.setDisable(true);
     }
   }
 

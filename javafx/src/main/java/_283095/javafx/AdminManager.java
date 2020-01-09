@@ -70,6 +70,8 @@ public class AdminManager
 
   @FXML
   private Label lConfirmStatus;
+  
+  public static String selectedMail;
 
   @FXML
   void DeleteActivity(ActionEvent event) throws SQLException, IOException
@@ -159,12 +161,13 @@ public class AdminManager
   @FXML
   void OpenModUser(ActionEvent event) throws IOException, SQLException
   {
-
+    selectedMail = lvUsers.getSelectionModel().getSelectedItem();
     Stage modForm = new Stage();
     modForm.setTitle("Mod User Form");
     modForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminModUser.fxml"))));
     modForm.show();
+    Statement stmt = DBManager.getConnection().createStatement();
   }
 
   @FXML
@@ -213,8 +216,8 @@ public class AdminManager
       lOperations.setText("Selezionare L'utente");
   }
 
-  /*public static ListView<String> getLvUsers()
+  public static String getSelectedEmail()
   {
-    return lvUsers;
-  }*/
+    return selectedMail;
+  }
 }
