@@ -21,7 +21,7 @@ public class AdminManager
 {
 
   @FXML
-  private ListView<String> lvUsers;
+  private static ListView<String> lvUsers;
 
   @FXML
   private ListView<String> lvAttivita;
@@ -119,17 +119,11 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    System.out.println("Called INIT");
-    if (App.getInit() == false)
-    {
-      UpdateLists();
-      App.setInit(true);
-    }
+    System.out.println("AdminManager INIT");
   }
 
   void UpdateLists() throws SQLException, IOException
   {
-
     lvAttivita.getItems().clear();
     lvUsers.getItems().clear();
 
@@ -170,22 +164,6 @@ public class AdminManager
     addForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
     addForm.show();
-
-    Statement stmt = DBManager.getConnection().createStatement();
-    ResultSet rs = stmt
-        .executeQuery("SELECT * FROM PERSONA WHERE PERSONA.email = '"
-            + lvUsers.getSelectionModel().getSelectedItem() + "'");
-    if (rs.next())
-    {
-      tfUserName.setText(rs.getString("name"));
-      tfUserSurname.setText(rs.getString("surname"));
-      tfUserMail.setText(rs.getString("email"));
-      tfUserPassword.setText(rs.getString("pwd"));
-      if (rs.getString("ruolo") == "Amministratore")
-      {
-        cbAdmin.setSelected(true);
-      }
-    }
   }
 
   @FXML
@@ -237,5 +215,9 @@ public class AdminManager
     }
     else
       lOperations.setText("Selezionare L'utente");
+  }
+  
+  public static ListView<String> getLvUsers() {
+    return lvUsers;
   }
 }

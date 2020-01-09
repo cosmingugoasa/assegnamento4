@@ -39,6 +39,7 @@ public class AdminModUser {
     @FXML
     public void initialize() throws SQLException, IOException
     {
+      System.out.println("Mod INIT");
       Statement stmt = DBManager.getConnection().createStatement();
       ResultSet rs = stmt
           .executeQuery("SELECT * FROM PERSONA WHERE PERSONA.email = '"
