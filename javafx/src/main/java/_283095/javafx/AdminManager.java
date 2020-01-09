@@ -19,7 +19,8 @@ import javafx.stage.Stage;
 
 public class AdminManager
 {
-
+  //admin buttons
+  
   @FXML
   private static ListView<String> lvUsers;
 
@@ -48,8 +49,6 @@ public class AdminManager
   private Label lOperations;
 
   // ADD USER ELEMENTS
-  Stage addForm = new Stage();
-  boolean mod = false;
 
   @FXML
   private TextField tfUserName;
@@ -119,7 +118,7 @@ public class AdminManager
   @FXML
   public void initialize() throws SQLException, IOException
   {
-   
+    
   }
 
   void UpdateLists() throws SQLException, IOException
@@ -150,6 +149,7 @@ public class AdminManager
   @FXML
   void OpenAddUser(ActionEvent event) throws IOException
   {
+    Stage addForm = new Stage();
     addForm.setTitle("Add User Form");
     addForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
@@ -159,10 +159,12 @@ public class AdminManager
   @FXML
   void OpenModUser(ActionEvent event) throws IOException, SQLException
   {
-    addForm.setTitle("Mod User Form");
-    addForm.setScene(new Scene(
+
+    Stage modForm = new Stage();
+    modForm.setTitle("Mod User Form");
+    modForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminModUser.fxml"))));
-    addForm.show();
+    modForm.show();
   }
 
   @FXML
