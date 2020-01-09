@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 
 public class UserManager
 {
@@ -28,14 +30,21 @@ public class UserManager
 
   @FXML
   private ListView<String> lvIscrizioni;
+  
+  @FXML
+  private Menu btnUser;
+  
+  @FXML
+  private MenuItem btnLogout;
 
   @FXML
   public void initialize() throws SQLException, IOException
   {
-    if (App.getUser().getRuolo() == "Socio")
+    if (App.getUser().getRuolo().equals("Socio"))
     {
       btnAdminFunctions.setVisible(false);
     }
+    btnUser.setText(App.getUser().getName());
     UpdateLists();
   }
 
@@ -110,6 +119,13 @@ public class UserManager
   {
     Scene home = new Scene(
         FXMLLoader.load(getClass().getResource("AdminManager.fxml")));
+    App.setWindow(home);
+  }
+  
+  @FXML
+  void Logout(ActionEvent event) throws IOException {
+    Scene home = new Scene(
+        FXMLLoader.load(getClass().getResource("Login.fxml")));
     App.setWindow(home);
   }
 }
