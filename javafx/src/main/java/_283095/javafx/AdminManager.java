@@ -190,7 +190,6 @@ public class AdminManager
 
         alert.setContentText("Utente Rimosso");
         alert.showAndWait();
-        // lOperations.setText("");
         UpdateLists();
       }
       else

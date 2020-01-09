@@ -54,18 +54,17 @@ public class AdminAddUser
       if (App.getUserAdmin().addUser(tfUserMail.getText(), tfUserName.getText(),
           tfUserSurname.getText(), tfUserPassword.getText(), ruolo))
       {
-        alert.setContentText("Utente aggiunto con successo");
+        alert.setContentText("Utente aggiunto con successo.");
         alert.showAndWait();
         tfUserMail.clear();
         tfUserName.clear();
         tfUserSurname.clear();
         tfUserPassword.clear();
         cbAdmin.setSelected(false);
-        // ((Stage) btnConfirm.getScene().getWindow()).close();
       }
       else
       {
-        alert.setContentText("Errore Inserimento Utente");
+        alert.setContentText("Utente esistente oppure query errata.");
         alert.showAndWait();
       }
 
@@ -73,5 +72,4 @@ public class AdminAddUser
     else
       lConfirmStatus.setText("Riempire i campi correttamente");
   }
-
 }

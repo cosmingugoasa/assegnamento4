@@ -24,15 +24,19 @@ public class Amministratore extends Persona
 
     Statement updateStm = DBManager.getConnection().createStatement();
     DBManager.getConnection().setAutoCommit(false); // start transaction block
-    int result = updateStm.executeUpdate(
-        "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
-            + _email + "','" + _name + "','" + _surname + "','" + _pwd + "','"
-            + _ruolo + "')");
-    DBManager.getConnection().commit();
-    DBManager.getConnection().setAutoCommit(true);
-    if (result == 1)
-      return true;
-
+    try {
+      int result = updateStm.executeUpdate(
+          "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
+              + _email + "','" + _name + "','" + _surname + "','" + _pwd + "','"
+              + _ruolo + "')");
+      DBManager.getConnection().commit();
+      DBManager.getConnection().setAutoCommit(true);
+      if (result == 1)
+        return true;
+    }
+    catch (Exception e){
+      return false;
+    }
     return false;
   }
 
@@ -53,17 +57,20 @@ public class Amministratore extends Persona
 
     Statement updateStm = DBManager.getConnection().createStatement();
     DBManager.getConnection().setAutoCommit(false); // start transaction block
-    int result = updateStm.executeUpdate(
-        "UPDATE `PERSONA` SET `email`='" + _email + "',`name`='" + _name
-            + "',`surname`='" + _surname + "',`pwd`='" + _pwd + "',`ruolo`='"
-            + _ruolo + "' WHERE PERSONA.email = '" + ChangeUser + "'");
-    DBManager.getConnection().commit();
-    DBManager.getConnection().setAutoCommit(true);
-    if (result == 1)
-      return true;
-
+    try {
+      int result = updateStm.executeUpdate(
+          "UPDATE `PERSONA` SET `email`='" + _email + "',`name`='" + _name
+              + "',`surname`='" + _surname + "',`pwd`='" + _pwd + "',`ruolo`='"
+              + _ruolo + "' WHERE PERSONA.email = '" + ChangeUser + "'");
+      DBManager.getConnection().commit();
+      DBManager.getConnection().setAutoCommit(true);
+      if (result == 1)
+        return true;
+    }
+    catch(Exception e) {
+      return false;
+    }
     return false;
-
   }
 
   public boolean addAttivita(String activityName, String tipologia)
