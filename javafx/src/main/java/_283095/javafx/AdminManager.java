@@ -51,6 +51,8 @@ public class AdminManager
 
   @FXML
   private Label lOperations;
+  
+  static String selectedMail;
 
   @FXML
   void DeleteActivity(ActionEvent event) throws SQLException, IOException
