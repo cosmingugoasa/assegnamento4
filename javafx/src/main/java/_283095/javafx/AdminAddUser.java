@@ -38,9 +38,9 @@ public class AdminAddUser
   @FXML
   void AddUser(ActionEvent event) throws SQLException, IOException
   {
-    if (!tfUserMail.getText().isEmpty() || !tfUserName.getText().isEmpty()
-        || !tfUserSurname.getText().isEmpty()
-        || !tfUserPassword.getText().isEmpty())
+    if (!tfUserMail.getText().isEmpty() && !tfUserName.getText().isEmpty()
+        && !tfUserSurname.getText().isEmpty()
+        && !tfUserPassword.getText().isEmpty())
     {
       String ruolo;
       if (cbAdmin.isSelected())
@@ -58,7 +58,7 @@ public class AdminAddUser
         lConfirmStatus.setText("Errore Inserimento Utente");
     }
     else
-      lConfirmStatus.setText("Inputs not valid. Retry.");
+      lConfirmStatus.setText("Riempire i campi di inserimento");
   }
 
 }

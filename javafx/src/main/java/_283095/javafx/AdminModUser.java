@@ -39,13 +39,13 @@ public class AdminModUser
   private PasswordField tfUserPassword;
 
   ResultSet selected;
-  
+
   @FXML
   public void initialize() throws SQLException, IOException
   {
     Statement stmt = DBManager.getConnection().createStatement();
-    selected = stmt.executeQuery(
-        "SELECT * FROM PERSONA WHERE PERSONA.email = '" + AdminManager.getSelectedEmail() + "'");
+    selected = stmt.executeQuery("SELECT * FROM PERSONA WHERE PERSONA.email = '"
+        + AdminManager.getSelectedEmail() + "'");
     if (selected.next() != false)
     {
       tfUserName.setText(selected.getString("name"));
@@ -57,7 +57,8 @@ public class AdminModUser
         cbAdmin.setSelected(true);
       }
     }
-    else {
+    else
+    {
       lConfirmStatus.setText("User not found.");
       btnConfirm.setDisable(true);
     }
@@ -75,21 +76,22 @@ public class AdminModUser
     {
       ruolo = "Socio";
     }
-    
-    Statement stmt = DBManager.getConnection().createStatement();
-    int rs = stmt
-        .executeUpdate("UPDATE `PERSONA` SET `email`='" + tfUserMail.getText()
-            + "',`name`='" + tfUserName.getText() + "',`surname`='"
-            + tfUserSurname.getText() + "',`pwd`='" + tfUserPassword.getText()
-            + "',`ruolo`='" + ruolo + "' WHERE PERSONA.email = '"
-            + selected.getString("email")
-            + "'");
-    
-    if(rs == 1) {
-      ((Stage) btnConfirm.getScene().getWindow()).close();
-    }else {
-      lConfirmStatus.setText("Query error.");
+
+    if (!tfUserMail.getText().isEmpty() && !tfUserName.getText().isEmpty()
+        && !tfUserSurname.getText().isEmpty()
+        && !tfUserPassword.getText().isEmpty())
+    {
+      if (App.getUserAdmin().ModifyUser(tfUserMail.getText(),
+          tfUserName.getText(), tfUserSurname.getText(),
+          tfUserPassword.getText(), ruolo, selected.getString("email")))
+      {
+        ((Stage) btnConfirm.getScene().getWindow()).close();
+      }
+      else
+        lConfirmStatus.setText("Errore Modifica Utente");
     }
+    else
+      lConfirmStatus.setText("Riempire i campi di inserimento");
   }
 
 }

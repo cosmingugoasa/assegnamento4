@@ -47,8 +47,23 @@ public class Amministratore extends Persona
     return false;
   }
 
-  public void ModifyUser()
+  public boolean ModifyUser(String _email, String _name, String _surname,
+      String _pwd, String _ruolo, String ChangeUser) throws SQLException
   {
+
+    Statement updateStm = DBManager.getConnection().createStatement();
+    DBManager.getConnection().setAutoCommit(false); // start transaction block
+    int result = updateStm.executeUpdate(
+        "UPDATE `PERSONA` SET `email`='" + _email + "',`name`='" + _name
+            + "',`surname`='" + _surname + "',`pwd`='" + _pwd + "',`ruolo`='"
+            + _ruolo + "' WHERE PERSONA.email = '" + ChangeUser + "'");
+    DBManager.getConnection().commit();
+    DBManager.getConnection().setAutoCommit(true);
+    if (result == 1)
+      return true;
+
+    return false;
+
   }
 
   public boolean addAttivita(String activityName, String tipologia)
