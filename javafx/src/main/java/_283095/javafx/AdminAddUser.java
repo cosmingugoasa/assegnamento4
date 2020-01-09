@@ -5,15 +5,19 @@ import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AdminAddUser
 {
+  Alert alert = new Alert(AlertType.INFORMATION);
+
   @FXML
   private TextField tfUserName;
 
@@ -34,7 +38,7 @@ public class AdminAddUser
 
   @FXML
   private Label lConfirmStatus;
-  
+
   @FXML
   void AddUser(ActionEvent event) throws SQLException, IOException
   {
@@ -51,11 +55,16 @@ public class AdminAddUser
       if (App.getUserAdmin().addUser(tfUserMail.getText(), tfUserName.getText(),
           tfUserSurname.getText(), tfUserPassword.getText(), ruolo))
       {
+        alert.setContentText("Utente aggiunto con successo");
+        alert.showAndWait();
         ((Stage) btnConfirm.getScene().getWindow()).close();
-        // UpdateLists();
       }
       else
-        lConfirmStatus.setText("Errore Inserimento Utente");
+      {
+        alert.setContentText("Errore Inserimento Utente");
+        alert.showAndWait();
+      }
+
     }
     else
       lConfirmStatus.setText("Riempire i campi di inserimento");

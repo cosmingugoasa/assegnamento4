@@ -7,16 +7,18 @@ import java.sql.Statement;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AdminModUser
 {
-
+  Alert alert = new Alert(AlertType.INFORMATION);
   @FXML
   private TextField tfUserName;
 
@@ -85,10 +87,15 @@ public class AdminModUser
           tfUserName.getText(), tfUserSurname.getText(),
           tfUserPassword.getText(), ruolo, selected.getString("email")))
       {
+        alert.setContentText("Utente Modificato");
+        alert.showAndWait();
         ((Stage) btnConfirm.getScene().getWindow()).close();
       }
       else
-        lConfirmStatus.setText("Errore Modifica Utente");
+      {
+        alert.setContentText("Errore modifica Utente ");
+        alert.showAndWait();
+      }
     }
     else
       lConfirmStatus.setText("Riempire i campi di inserimento");

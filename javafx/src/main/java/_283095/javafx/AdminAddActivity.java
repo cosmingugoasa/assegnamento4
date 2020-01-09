@@ -5,14 +5,17 @@ import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class AdminAddActivity
 {
+  Alert alert = new Alert(AlertType.INFORMATION);
 
   @FXML
   private TextField tbNameActivity;
@@ -61,11 +64,15 @@ public class AdminAddActivity
 
       if (App.getUserAdmin().addAttivita(tbNameActivity.getText(), tipologia))
       {
-        ((Stage) btnAddActivity.getScene().getWindow()).close();
-        // UpdateLists();
+        alert.setContentText("Attività aggiunta con successo");
+        alert.showAndWait();
+        ((Stage) btnAddActivity.getScene().getWindow()).close();        
       }
       else
-        lbStatus.setText("Errore: Attivita Esistente");
+      {
+        alert.setContentText("Errore: Attivita Esistente");
+        alert.showAndWait();
+      }
     }
     else
       lbStatus.setText("Errore: Riempire tutti i Campi");

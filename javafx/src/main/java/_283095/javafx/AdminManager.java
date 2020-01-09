@@ -9,16 +9,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AdminManager
 {
+  Alert alert = new Alert(AlertType.INFORMATION);
+
   @FXML
   public void initialize() throws SQLException, IOException
   {
@@ -49,9 +49,6 @@ public class AdminManager
   @FXML
   private Button btnRefreshList;
 
-  @FXML
-  private Label lOperations;
-  
   static String selectedMail;
 
   @FXML
@@ -63,12 +60,20 @@ public class AdminManager
           .removeAttivita(lvAttivita.getSelectionModel().getSelectedItem()))
       {
         UpdateLists();
+        alert.setContentText("Attività Rimossa");
+        alert.showAndWait();
       }
       else
-        lOperations.setText("Errore rimozione attività");
+      {
+        alert.setContentText("Errore rimozione attività");
+        alert.showAndWait();
+      }
     }
     else
-      lOperations.setText("Selezionare Attivita!!!");
+    {
+      alert.setContentText("Selezionare Attivita!!!");
+      alert.showAndWait();
+    }
   }
 
   @FXML
@@ -142,7 +147,6 @@ public class AdminManager
     modForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminModUser.fxml"))));
     modForm.show();
-    Statement stmt = DBManager.getConnection().createStatement();
   }
 
   @FXML
@@ -154,15 +158,24 @@ public class AdminManager
       if (App.getUserAdmin()
           .removeUser(lvUsers.getSelectionModel().getSelectedItem()))
       {
-        lOperations.setText("User deleted.");
+
+        alert.setContentText("Utente Rimosso");
+        alert.showAndWait();
+        // lOperations.setText("");
         UpdateLists();
       }
       else
-        lOperations.setText("Errore rimozione utente");
+      {
+        alert.setContentText("Errore rimozione utente");
+        alert.showAndWait();
+      }
 
     }
     else
-      lOperations.setText("Selezionare L'utente");
+    {
+      alert.setContentText("Selezionare L'utente");
+      alert.showAndWait();
+    }
   }
 
   public static String getSelectedEmail()
