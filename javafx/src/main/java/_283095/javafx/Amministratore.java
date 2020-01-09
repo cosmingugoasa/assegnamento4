@@ -18,19 +18,36 @@ public class Amministratore extends Persona
     super("", "", "", "", "");
   }
 
-  public void addUser()
+  public boolean addUser(String _email, String _name, String _surname,
+      String _pwd, String _ruolo) throws SQLException
   {
+
+    Statement updateStm = DBManager.getConnection().createStatement();
+    DBManager.getConnection().setAutoCommit(false); // start transaction block
+    int result = updateStm.executeUpdate(
+        "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
+            + _email + "','" + _name + "','" + _surname + "','" + _pwd + "','"
+            + _ruolo + "')");
+    DBManager.getConnection().commit();
+    DBManager.getConnection().setAutoCommit(true);
+    if (result == 1)
+      return true;
+
+    return false;
   }
 
-  public void removeUser()
+  public boolean removeUser(String _email) throws SQLException
   {
+    Statement stmt = DBManager.getConnection().createStatement();
+    int rs = stmt.executeUpdate(
+        "DELETE FROM PERSONA WHERE PERSONA.email = '" + _email + "'");
+    if (rs == 1)
+      return true;
+
+    return false;
   }
 
   public void ModifyUser()
-  {
-  }
-
-  public void addGara()
   {
   }
 
@@ -62,8 +79,6 @@ public class Amministratore extends Persona
   {
     Statement updateStm = DBManager.getConnection().createStatement();
     DBManager.getConnection().setAutoCommit(false); // start transaction block
-    System.out.println(
-        "DELETE FROM `ATTIVITA` WHERE ATTIVITA.name = '" + activityName + "'");
     int result = updateStm.executeUpdate(
         "DELETE FROM `ATTIVITA` WHERE ATTIVITA.name = '" + activityName + "'");
 

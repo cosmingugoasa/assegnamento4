@@ -135,18 +135,18 @@ public class AdminManager
   @FXML
   void DeleteActivity(ActionEvent event) throws SQLException, IOException
   {
-    if (lvAttivita.getItems() != null)
+    if (lvAttivita.getSelectionModel().getSelectedItem() != null)
     {
       if (App.getUserAdmin()
           .removeAttivita(lvAttivita.getSelectionModel().getSelectedItem()))
       {
         UpdateLists();
       }
-      /*else
-        lOperations.setText("Errore rimozione attività");*/
+      else
+        lOperations.setText("Errore rimozione attività");
     }
-    /*else
-    lOperations.setText("Selezionare Attivita!!!");*/
+    else
+      lOperations.setText("Selezionare Attivita!!!");
   }
 
   @FXML
@@ -253,50 +253,49 @@ public class AdminManager
   {
     if (mod == false)
     {
-      Statement stmt = DBManager.getConnection().createStatement();
-      int rs;
-
-      if (tfUserMail.getText().isEmpty() || tfUserName.getText().isEmpty()
-          || tfUserSurname.getText().isEmpty()
-          || tfUserPassword.getText().isEmpty())
+      if (!tfUserMail.getText().isEmpty() || !tfUserName.getText().isEmpty()
+          || !tfUserSurname.getText().isEmpty()
+          || !tfUserPassword.getText().isEmpty())
       {
-        lConfirmStatus.setText("Inputs not valid. Retry.");
-        return;
-      }
+        String ruolo;
+        if (cbAdmin.isSelected())
+          ruolo = "Amministratore";
+        else
+          ruolo = "Socio";
 
-      if (cbAdmin.isSelected())
-      {
-        rs = stmt.executeUpdate(
-            "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
-                + tfUserMail.getText() + "','" + tfUserName.getText() + "','"
-                + tfUserSurname.getText() + "','" + tfUserPassword.getText()
-                + "','" + "Amministratore" + "')");
+        if (App.getUserAdmin().addUser(tfUserMail.getText(),
+            tfUserName.getText(), tfUserSurname.getText(),
+            tfUserPassword.getText(), ruolo))
+        {
+          ((Stage) btnConfirm.getScene().getWindow()).close();
+          // UpdateLists();
+        }
+        else
+          lbStatus.setText("Errore Inserimento Utente");
       }
       else
-      {
-        rs = stmt.executeUpdate(
-            "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
-                + tfUserMail.getText() + "','" + tfUserName.getText() + "','"
-                + tfUserSurname.getText() + "','" + tfUserPassword.getText()
-                + "','" + "Socio" + "')");
-      }
-      
-      ((Stage) btnConfirm.getScene().getWindow()).close();
+        lConfirmStatus.setText("Inputs not valid. Retry.");
+
     }
   }
 
   @FXML
   void DeleteUser(ActionEvent event) throws SQLException, IOException
   {
-    if(lvUsers.getSelectionModel().getSelectedItem() != null) {
-        Statement stmt = DBManager.getConnection().createStatement();
-        int rs = stmt.executeUpdate("DELETE FROM PERSONA WHERE PERSONA.email = '"
-            + lvUsers.getSelectionModel().getSelectedItem() + "'");
-        if (rs == 1)
-        {
-          lOperations.setText("User deleted.");
-          UpdateLists();
-        }
+    if (lvUsers.getSelectionModel().getSelectedItem() != null)
+    {
+
+      if (App.getUserAdmin()
+          .removeUser(lvUsers.getSelectionModel().getSelectedItem()))
+      {
+        lOperations.setText("User deleted.");
+        UpdateLists();
       }
-   }
+      else
+        lOperations.setText("Errore rimozione utente");
+
+    }
+    else
+      lOperations.setText("Selezionare L'utente");
+  }
 }
