@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AdminManager
@@ -87,6 +88,7 @@ public class AdminManager
       throws IOException, SQLException, InterruptedException
   {
     Stage addAttivita = new Stage();
+    addAttivita.initModality(Modality.APPLICATION_MODAL);
     addAttivita.setTitle("Add Activity");
     addAttivita.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml"))));
@@ -132,6 +134,7 @@ public class AdminManager
   void OpenAddUser(ActionEvent event) throws IOException
   {
     Stage addForm = new Stage();
+    addForm.initModality(Modality.APPLICATION_MODAL);
     addForm.setTitle("Add User Form");
     addForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
@@ -143,6 +146,7 @@ public class AdminManager
   {
     selectedMail = lvUsers.getSelectionModel().getSelectedItem();
     Stage modForm = new Stage();
+    modForm.initModality(Modality.APPLICATION_MODAL);
     modForm.setTitle("Mod User Form");
     modForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminModUser.fxml"))));

@@ -42,7 +42,7 @@ public class AdminAddUser
   @FXML
   void AddUser(ActionEvent event) throws SQLException, IOException
   {
-    if (!tfUserMail.getText().isEmpty() && !tfUserName.getText().isEmpty()
+    if (tfUserMail.getText().contains("@") && !tfUserName.getText().isEmpty()
         && !tfUserSurname.getText().isEmpty()
         && !tfUserPassword.getText().isEmpty())
     {
@@ -67,7 +67,7 @@ public class AdminAddUser
 
     }
     else
-      lConfirmStatus.setText("Riempire i campi di inserimento");
+      lConfirmStatus.setText("Riempire i campi correttamente");
   }
 
 }
