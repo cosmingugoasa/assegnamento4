@@ -19,8 +19,12 @@ import javafx.stage.Stage;
 
 public class AdminManager
 {
-  //admin buttons
-  
+  @FXML
+  public void initialize() throws SQLException, IOException
+  {
+    UpdateLists();
+  }
+
   @FXML
   private ListView<String> lvUsers;
 
@@ -47,31 +51,6 @@ public class AdminManager
 
   @FXML
   private Label lOperations;
-
-  // ADD USER ELEMENTS
-
-  @FXML
-  private TextField tfUserName;
-
-  @FXML
-  private TextField tfUserSurname;
-
-  @FXML
-  private TextField tfUserMail;
-
-  @FXML
-  private PasswordField tfUserPassword;
-
-  @FXML
-  private CheckBox cbAdmin;
-
-  @FXML
-  private Button btnConfirm;
-
-  @FXML
-  private Label lConfirmStatus;
-  
-  public static String selectedMail;
 
   @FXML
   void DeleteActivity(ActionEvent event) throws SQLException, IOException
@@ -115,12 +94,6 @@ public class AdminManager
         e1.printStackTrace();
       }
     });
-  }
-
-  @FXML
-  public void initialize() throws SQLException, IOException
-  {
-    UpdateLists();
   }
 
   void UpdateLists() throws SQLException, IOException
@@ -168,32 +141,6 @@ public class AdminManager
         FXMLLoader.load(getClass().getResource("AdminModUser.fxml"))));
     modForm.show();
     Statement stmt = DBManager.getConnection().createStatement();
-  }
-
-  @FXML
-  void AddUser(ActionEvent event) throws SQLException, IOException
-  {
-    if (!tfUserMail.getText().isEmpty() || !tfUserName.getText().isEmpty()
-        || !tfUserSurname.getText().isEmpty()
-        || !tfUserPassword.getText().isEmpty())
-    {
-      String ruolo;
-      if (cbAdmin.isSelected())
-        ruolo = "Amministratore";
-      else
-        ruolo = "Socio";
-
-      if (App.getUserAdmin().addUser(tfUserMail.getText(), tfUserName.getText(),
-          tfUserSurname.getText(), tfUserPassword.getText(), ruolo))
-      {
-        ((Stage) btnConfirm.getScene().getWindow()).close();
-        // UpdateLists();
-      }
-      else
-        lConfirmStatus.setText("Errore Inserimento Utente");
-    }
-    else
-      lConfirmStatus.setText("Inputs not valid. Retry.");
   }
 
   @FXML
