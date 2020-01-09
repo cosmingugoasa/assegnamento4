@@ -139,6 +139,17 @@ public class AdminManager
     addForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminAddUser.fxml"))));
     addForm.show();
+
+    addForm.setOnCloseRequest(e -> {
+      try
+      {
+        UpdateLists();
+      }
+      catch (SQLException | IOException e1)
+      {
+        e1.printStackTrace();
+      }
+    });
   }
 
   @FXML
@@ -151,6 +162,17 @@ public class AdminManager
     modForm.setScene(new Scene(
         FXMLLoader.load(getClass().getResource("AdminModUser.fxml"))));
     modForm.show();
+
+    modForm.setOnCloseRequest(e -> {
+      try
+      {
+        UpdateLists();
+      }
+      catch (SQLException | IOException e1)
+      {
+        e1.printStackTrace();
+      }
+    });
   }
 
   @FXML

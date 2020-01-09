@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 
 public class AdminAddUser
 {
@@ -57,7 +56,12 @@ public class AdminAddUser
       {
         alert.setContentText("Utente aggiunto con successo");
         alert.showAndWait();
-        ((Stage) btnConfirm.getScene().getWindow()).close();
+        tfUserMail.clear();
+        tfUserName.clear();
+        tfUserSurname.clear();
+        tfUserPassword.clear();
+        cbAdmin.setSelected(false);
+        // ((Stage) btnConfirm.getScene().getWindow()).close();
       }
       else
       {
