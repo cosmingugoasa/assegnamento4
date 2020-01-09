@@ -1,5 +1,9 @@
 package _283095.javafx;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Amministratore extends Persona
 {
 
@@ -8,12 +12,12 @@ public class Amministratore extends Persona
   {
     super(_nome, _cognome, _email, _pwd, _ruolo);
   }
-  
+
   public Amministratore()
   {
     super("", "", "", "", "");
   }
-  
+
   public void addUser()
   {
   }
@@ -30,15 +34,45 @@ public class Amministratore extends Persona
   {
   }
 
-  public void addAttivita()
+  public boolean addAttivita(String activityName, String tipologia)
+      throws SQLException
   {
+
+    Statement stmt = DBManager.getConnection().createStatement();
+    ResultSet rs = stmt.executeQuery(
+        "SELECT ATTIVITA.name FROM ATTIVITA WHERE ATTIVITA.name = '"
+            + activityName + "'");
+
+    if (rs.next() == false)
+    {
+      Statement updateStm = DBManager.getConnection().createStatement();
+      DBManager.getConnection().setAutoCommit(false); // start transaction block
+      int result = updateStm
+          .executeUpdate("INSERT INTO `ATTIVITA`(`name`, `tipologia`) VALUES ('"
+              + activityName + "','" + tipologia + "')");
+      DBManager.getConnection().commit();
+      DBManager.getConnection().setAutoCommit(true);
+      if (result == 1)
+        return true;
+    }
+    return false;
   }
 
-  public void removeAttivita()
+  public boolean removeAttivita(String activityName) throws SQLException
   {
-  }
+    Statement updateStm = DBManager.getConnection().createStatement();
+    DBManager.getConnection().setAutoCommit(false); // start transaction block
+    System.out.println(
+        "DELETE FROM `ATTIVITA` WHERE ATTIVITA.name = '" + activityName + "'");
+    int result = updateStm.executeUpdate(
+        "DELETE FROM `ATTIVITA` WHERE ATTIVITA.name = '" + activityName + "'");
 
-  public void ModifyAttivita()
-  {
+    DBManager.getConnection().commit();
+    DBManager.getConnection().setAutoCommit(true);
+    if (result == 1)
+      return true;
+
+    return false;
+
   }
 }

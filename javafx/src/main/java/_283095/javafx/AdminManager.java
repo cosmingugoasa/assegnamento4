@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -86,28 +87,7 @@ public class AdminManager
   private Button btnAddActivity;
 
   @FXML
-  void Refresh(ActionEvent event) throws SQLException, IOException
-  {
-    UpdateLists();
-  }
-
-  @FXML
-  void DeleteActivity(ActionEvent event)
-  {
-
-  }
-
-  @FXML
-  void OpenAddActivity(ActionEvent event) throws IOException, SQLException
-  {
-
-    Stage addAttivita = new Stage();
-    addAttivita.setTitle("Add Activity");
-    addAttivita.setScene(new Scene(
-        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml"))));
-    addAttivita.show();
-    // UpdateLists();
-  }
+  private Label lbStatus;
 
   @FXML
   void CheckRace(ActionEvent event)
@@ -128,8 +108,72 @@ public class AdminManager
   }
 
   @FXML
-  void addActivity(ActionEvent event)
+  void addActivity(ActionEvent event) throws SQLException, IOException
   {
+    if (cbCourse.isSelected()
+        || cbRace.isSelected() && !tbNameActivity.getText().isEmpty())
+    {
+      String tipologia;
+      if (cbCourse.isSelected())
+        tipologia = "Corso";
+      else
+        tipologia = "Gara";
+
+      if (App.getUserAdmin().addAttivita(tbNameActivity.getText(), tipologia))
+      {
+        ((Stage) btnAddActivity.getScene().getWindow()).close();
+        // UpdateLists();
+      }
+      else
+        lbStatus.setText("Errore: Attivita Esistente");
+    }
+    else
+      lbStatus.setText("Errore: Riempire tutti i Campi");
+
+  }
+
+  @FXML
+  void DeleteActivity(ActionEvent event) throws SQLException, IOException
+  {
+    if (lvAttivita.getItems() != null)
+    {
+      if (App.getUserAdmin()
+          .removeAttivita(lvAttivita.getSelectionModel().getSelectedItem()))
+      {
+        UpdateLists();
+      }
+      /*else
+        lOperations.setText("Errore rimozione attività");*/
+    }
+    /*else
+    lOperations.setText("Selezionare Attivita!!!");*/
+  }
+
+  @FXML
+  void Refresh(ActionEvent event) throws SQLException, IOException
+  {
+    UpdateLists();
+  }
+
+  @FXML
+  void OpenAddActivity(ActionEvent event)
+      throws IOException, SQLException, InterruptedException
+  {
+    Stage addAttivita = new Stage();
+    addAttivita.setTitle("Add Activity");
+    addAttivita.setScene(new Scene(
+        FXMLLoader.load(getClass().getResource("AdminAddActivity.fxml"))));
+    addAttivita.show();
+    addAttivita.setOnCloseRequest(e -> {
+      try
+      {
+        UpdateLists();
+      }
+      catch (SQLException | IOException e1)
+      {
+        e1.printStackTrace();
+      }
+    });
   }
 
   @FXML
