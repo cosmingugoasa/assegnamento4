@@ -72,66 +72,6 @@ public class AdminManager
   @FXML
   private Label lConfirmStatus;
 
-  // ADD ACTIVITIES ELEMENTS
-
-  @FXML
-  private TextField tbNameActivity;
-
-  @FXML
-  private CheckBox cbCourse;
-
-  @FXML
-  private CheckBox cbRace;
-
-  @FXML
-  private Button btnAddActivity;
-
-  @FXML
-  private Label lbStatus;
-
-  @FXML
-  void CheckRace(ActionEvent event)
-  {
-    if (cbCourse.isSelected())
-    {
-      cbCourse.setSelected(false);
-    }
-  }
-
-  @FXML
-  void checkCourse(ActionEvent event)
-  {
-    if (cbRace.isSelected())
-    {
-      cbRace.setSelected(false);
-    }
-  }
-
-  @FXML
-  void addActivity(ActionEvent event) throws SQLException, IOException
-  {
-    if (cbCourse.isSelected()
-        || cbRace.isSelected() && !tbNameActivity.getText().isEmpty())
-    {
-      String tipologia;
-      if (cbCourse.isSelected())
-        tipologia = "Corso";
-      else
-        tipologia = "Gara";
-
-      if (App.getUserAdmin().addAttivita(tbNameActivity.getText(), tipologia))
-      {
-        ((Stage) btnAddActivity.getScene().getWindow()).close();
-        // UpdateLists();
-      }
-      else
-        lbStatus.setText("Errore: Attivita Esistente");
-    }
-    else
-      lbStatus.setText("Errore: Riempire tutti i Campi");
-
-  }
-
   @FXML
   void DeleteActivity(ActionEvent event) throws SQLException, IOException
   {
@@ -233,7 +173,7 @@ public class AdminManager
 
     Statement stmt = DBManager.getConnection().createStatement();
     ResultSet rs = stmt
-        .executeQuery("SELECT * FROM PERSONA WHERE PERSONA.name = '"
+        .executeQuery("SELECT * FROM PERSONA WHERE PERSONA.email = '"
             + lvUsers.getSelectionModel().getSelectedItem() + "'");
     if (rs.next())
     {
@@ -271,7 +211,7 @@ public class AdminManager
           // UpdateLists();
         }
         else
-          lbStatus.setText("Errore Inserimento Utente");
+          lConfirmStatus.setText("Errore Inserimento Utente");
       }
       else
         lConfirmStatus.setText("Inputs not valid. Retry.");
