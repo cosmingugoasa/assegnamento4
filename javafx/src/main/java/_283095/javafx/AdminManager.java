@@ -49,7 +49,7 @@ public class AdminManager
 
   @FXML
   private Button btnRefreshList;
-  
+
   @FXML
   private Button btnBack;
 
@@ -205,9 +205,10 @@ public class AdminManager
       alert.showAndWait();
     }
   }
-  
+
   @FXML
-  void BackToUserManager(ActionEvent event) throws IOException {
+  void BackToUserManager(ActionEvent event) throws IOException
+  {
     Scene home = new Scene(
         FXMLLoader.load(getClass().getResource("UserManager.fxml")));
     App.setWindow(home);

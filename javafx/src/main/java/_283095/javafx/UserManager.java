@@ -8,13 +8,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Alert.AlertType;
 
 public class UserManager
 {
+  Alert alert = new Alert(AlertType.INFORMATION);
 
   @FXML
   private Button btnIscriviti;
@@ -30,12 +33,15 @@ public class UserManager
 
   @FXML
   private ListView<String> lvIscrizioni;
-  
+
   @FXML
   private Menu btnUser;
-  
+
   @FXML
   private MenuItem btnLogout;
+
+  @FXML
+  private Button btnRefreshLists;
 
   @FXML
   public void initialize() throws SQLException, IOException
@@ -48,15 +54,35 @@ public class UserManager
     UpdateLists();
   }
 
+  void setAlert(String message)
+  {
+    alert.setContentText(message);
+    alert.showAndWait();
+  }
+
   @FXML
   void Iscrizione(ActionEvent event) throws SQLException
   {
-    if (App.getUser().getRuolo().equals("Socio"))
-      App.getUserSocio()
-          .Iscriviti(lvAttivita.getSelectionModel().getSelectedItem());
+    String selectedActivity = lvAttivita.getSelectionModel().getSelectedItem();
+    if (selectedActivity != null)
+    {
+      if (App.getUser().getRuolo().equals("Socio"))
+      {
+        if (App.getUserSocio().Iscriviti(selectedActivity))
+          setAlert("Iscrizione a " + selectedActivity + " effettuata");
+        else
+          setAlert("Errore Iscrizione, corso non più esistente ");
+
+      }
+      else if (App.getUserAdmin()
+          .Iscriviti(lvAttivita.getSelectionModel().getSelectedItem()))
+
+        setAlert("Iscrizione a " + selectedActivity + " effettuata");
+      else
+        setAlert("Errore Iscrizione, corso non più esistente ");
+    }
     else
-      App.getUserAdmin()
-          .Iscriviti(lvAttivita.getSelectionModel().getSelectedItem());
+      setAlert("ATTENZIONE: selezionare attività ");
 
     UpdateLists();
   }
@@ -64,15 +90,29 @@ public class UserManager
   @FXML
   void Disiscrizione(ActionEvent event) throws SQLException
   {
-    System.out.println(App.getUser().getRuolo());
-    if (App.getUser().getRuolo().equals("Socio"))
+    String selectedActivity = lvIscrizioni.getSelectionModel()
+        .getSelectedItem();
+    if (selectedActivity != null)
     {
-      App.getUserSocio()
-          .Disiscriviti(lvIscrizioni.getSelectionModel().getSelectedItem());
+      if (App.getUser().getRuolo().equals("Socio"))
+      {
+        if (App.getUserSocio().Disiscriviti(selectedActivity))
+          setAlert("Disiscrizione effettuata");
+        else
+          setAlert("Errore Disiscrizione");
+      }
+      else
+      {
+        if (App.getUserAdmin().Disiscriviti(selectedActivity))
+          setAlert("Disiscrizione effettuata");
+        else
+          setAlert("Errore Disiscrizione");
+      }
+
     }
-    else {
-      App.getUserAdmin()
-          .Disiscriviti(lvIscrizioni.getSelectionModel().getSelectedItem());}
+    else
+      setAlert("ATTENZIONE: selezionare attività ");
+
     UpdateLists();
   }
 
@@ -94,7 +134,7 @@ public class UserManager
     {
       rs.close();
       rs = stmt.executeQuery(
-          "SELECT ATTIVITA.name FROM ATTIVITA, ISCRIZIONE WHERE ATTIVITA.id NOT IN (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
+          "SELECT ATTIVITA.name FROM ATTIVITA, ISCRIZIONE WHERE ATTIVITA.name NOT IN (SELECT ISCRIZIONE.nameAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
               + App.getUser().getEmail() + "') GROUP by ATTIVITA.name");
     }
 
@@ -105,7 +145,7 @@ public class UserManager
 
     // lista di attività a cui è iscritto l'utente
     rs = stmt.executeQuery(
-        "SELECT ATTIVITA.name FROM ATTIVITA WHERE ATTIVITA.id = ANY (SELECT ISCRIZIONE.idAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
+        "SELECT ATTIVITA.name FROM ATTIVITA WHERE ATTIVITA.name = ANY (SELECT ISCRIZIONE.nameAttivita from ISCRIZIONE WHERE ISCRIZIONE.emailPersona = '"
             + App.getUser().getEmail() + "')");
 
     while (rs.next())
@@ -121,11 +161,18 @@ public class UserManager
         FXMLLoader.load(getClass().getResource("AdminManager.fxml")));
     App.setWindow(home);
   }
-  
+
   @FXML
-  void Logout(ActionEvent event) throws IOException {
+  void Logout(ActionEvent event) throws IOException
+  {
     Scene home = new Scene(
         FXMLLoader.load(getClass().getResource("Login.fxml")));
     App.setWindow(home);
+  }
+
+  @FXML
+  void RefreshLists(ActionEvent event) throws SQLException
+  {
+    UpdateLists();
   }
 }

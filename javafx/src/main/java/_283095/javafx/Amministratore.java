@@ -24,7 +24,8 @@ public class Amministratore extends Persona
 
     Statement updateStm = DBManager.getConnection().createStatement();
     DBManager.getConnection().setAutoCommit(false); // start transaction block
-    try {
+    try
+    {
       int result = updateStm.executeUpdate(
           "INSERT INTO `PERSONA`(`email`, `name`, `surname`, `pwd`, `ruolo`) VALUES ('"
               + _email + "','" + _name + "','" + _surname + "','" + _pwd + "','"
@@ -34,7 +35,8 @@ public class Amministratore extends Persona
       if (result == 1)
         return true;
     }
-    catch (Exception e){
+    catch (Exception e)
+    {
       return false;
     }
     return false;
@@ -57,7 +59,8 @@ public class Amministratore extends Persona
 
     Statement updateStm = DBManager.getConnection().createStatement();
     DBManager.getConnection().setAutoCommit(false); // start transaction block
-    try {
+    try
+    {
       int result = updateStm.executeUpdate(
           "UPDATE `PERSONA` SET `email`='" + _email + "',`name`='" + _name
               + "',`surname`='" + _surname + "',`pwd`='" + _pwd + "',`ruolo`='"
@@ -67,7 +70,8 @@ public class Amministratore extends Persona
       if (result == 1)
         return true;
     }
-    catch(Exception e) {
+    catch (Exception e)
+    {
       return false;
     }
     return false;

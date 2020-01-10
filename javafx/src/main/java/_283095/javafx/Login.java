@@ -20,9 +20,6 @@ public class Login
   private Button btnLogin;
 
   @FXML
-  private Button btnSignUp;
-
-  @FXML
   private Label lbEmail;
 
   @FXML
@@ -36,8 +33,7 @@ public class Login
 
   @FXML
   private Label lbAction;
-  
-  
+
   @FXML
   void UserLogin(ActionEvent event) throws IOException
   {
@@ -55,12 +51,6 @@ public class Login
     }
     else
       lbAction.setText("Inserire correttamente i parametri");
-  }
-
-  @FXML
-  void SignUp(ActionEvent event)
-  {
-
   }
 
   private boolean TryLogin(final String email, final String pwd)

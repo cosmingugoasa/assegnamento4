@@ -17,7 +17,8 @@ public class App extends Application
   public void start(Stage primaryStage) throws IOException
   {
     window = primaryStage;
-    Scene login = new Scene(FXMLLoader.load(getClass().getResource("Login.fxml")));
+    Scene login = new Scene(
+        FXMLLoader.load(getClass().getResource("Login.fxml")));
 
     window.setTitle("Circolo Sportivo");
     window.setScene(login);
@@ -44,7 +45,7 @@ public class App extends Application
     return user;
   }
 
-  public static  void setUserAdmin(Amministratore _user)
+  public static void setUserAdmin(Amministratore _user)
   {
     user = new Amministratore();
     user = _user;
@@ -54,7 +55,7 @@ public class App extends Application
   {
     return (Amministratore) user;
   }
-  
+
   public static void setUserSocio(Socio _user)
   {
     user = new Socio();
@@ -65,5 +66,5 @@ public class App extends Application
   {
     return (Socio) user;
   }
-  
+
 }

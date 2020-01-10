@@ -26,5 +26,6 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Button fx:id="btnRefreshLists" layoutX="322.0" layoutY="27.0" mnemonicParsing="false" onAction="#RefreshLists" text="Refresh Lists" />
    </children>
 </Pane>
