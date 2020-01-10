@@ -48,6 +48,10 @@ public class Persona
     return this.ruolo;
   }
 
+  /*
+   * sends query to be executed on the DB.
+   * returs true if query is successful
+   */
   public boolean Iscriviti(String item) throws SQLException
   {
     // start transaction block
@@ -77,6 +81,10 @@ public class Persona
     return false;
   }
 
+  /*
+   * sends query to be executed on the DB.
+   * returs true if query is successful
+   */
   public boolean Disiscriviti(String item) throws SQLException
   {
     PreparedStatement updateStm;

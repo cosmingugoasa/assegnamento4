@@ -43,9 +43,11 @@ public class UserManager
   @FXML
   private Button btnRefreshLists;
 
+  //automatically called when window opens
   @FXML
   public void initialize() throws SQLException, IOException
   {
+    //if user is admin, enables admin functions
     if (App.getUser().getRuolo().equals("Socio"))
     {
       btnAdminFunctions.setVisible(false);
@@ -60,6 +62,9 @@ public class UserManager
     alert.showAndWait();
   }
 
+  /*
+   * sign up the user to the selected activity
+   */
   @FXML
   void Iscrizione(ActionEvent event) throws SQLException
   {
@@ -87,6 +92,9 @@ public class UserManager
     UpdateLists();
   }
 
+  /*
+   * unsubscribe the user to the selected activity
+   */
   @FXML
   void Disiscrizione(ActionEvent event) throws SQLException
   {
@@ -116,6 +124,10 @@ public class UserManager
     UpdateLists();
   }
 
+  /*
+   * send query to be executed on the DB, which returns lists of activities.
+   * Used to refresh the listviews.
+   */
   void UpdateLists() throws SQLException
   {
     lvAttivita.getItems().clear();
@@ -154,6 +166,10 @@ public class UserManager
     }
   }
 
+  /*
+   * Only shown is user is admin.
+   * Opens admin functions window.
+   */
   @FXML
   void ToggleAdminFunctions(ActionEvent event) throws IOException, SQLException
   {
@@ -162,6 +178,9 @@ public class UserManager
     App.setWindow(home);
   }
 
+  /*
+   * sends back to the login page 
+   */
   @FXML
   void Logout(ActionEvent event) throws IOException
   {

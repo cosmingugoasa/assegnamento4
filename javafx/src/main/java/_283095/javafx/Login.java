@@ -34,6 +34,12 @@ public class Login
   @FXML
   private Label lbAction;
 
+  /*
+   * Executed when Login button is pressed.
+   * checks if email has the "@" char than 
+   * tries to login.
+   * If successful opens next window
+   */
   @FXML
   void UserLogin(ActionEvent event) throws IOException
   {
@@ -53,6 +59,10 @@ public class Login
       lbAction.setText("Inserire correttamente i parametri");
   }
 
+  /*
+   * Sends query to be executed on the DB with the details in the input fields.
+   * If successful return true, else returns false
+   */
   private boolean TryLogin(final String email, final String pwd)
       throws IOException
   {
@@ -68,6 +78,7 @@ public class Login
                 + "\" AND pwd = \"" + pwd + "\";");
         while (rs.next())
         {
+          //check if logging user is admin or not
           switch (rs.getString("ruolo"))
           {
             case "Amministratore":

@@ -18,6 +18,10 @@ public class Amministratore extends Persona
     super("", "", "", "", "");
   }
 
+  /*
+   * sends query to be executed on the DB.
+   * returs true if query is successful
+   */
   public boolean addUser(String _email, String _name, String _surname,
       String _pwd, String _ruolo) throws SQLException
   {
@@ -42,6 +46,10 @@ public class Amministratore extends Persona
     return false;
   }
 
+  /*
+   * sends query to be executed on the DB.
+   * returs true if query is successful
+   */
   public boolean removeUser(String _email) throws SQLException
   {
     Statement stmt = DBManager.getConnection().createStatement();
@@ -53,6 +61,10 @@ public class Amministratore extends Persona
     return false;
   }
 
+  /*
+   * sends query to be executed on the DB.
+   * returs true if query is successful
+   */
   public boolean ModifyUser(String _email, String _name, String _surname,
       String _pwd, String _ruolo, String ChangeUser) throws SQLException
   {
@@ -77,6 +89,10 @@ public class Amministratore extends Persona
     return false;
   }
 
+  /*
+   * sends query to be executed on the DB.
+   * returs true if query is successful
+   */
   public boolean addAttivita(String activityName, String tipologia)
       throws SQLException
   {
@@ -107,6 +123,10 @@ public class Amministratore extends Persona
 
   }
 
+  /*
+   * sends query to be executed on the DB.
+   * returs true if query is successful
+   */
   public boolean removeAttivita(String activityName)
   {
     Statement updateStm;

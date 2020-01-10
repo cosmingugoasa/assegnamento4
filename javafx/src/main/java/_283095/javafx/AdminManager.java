@@ -55,6 +55,9 @@ public class AdminManager
 
   static String selectedMail;
 
+  /*
+   * deletes activity from the DB
+   */
   @FXML
   void DeleteActivity(ActionEvent event) throws SQLException, IOException
   {
@@ -86,6 +89,9 @@ public class AdminManager
     UpdateLists();
   }
 
+  /*
+   * opens form for adding a new activity to the DB
+   */
   @FXML
   void OpenAddActivity(ActionEvent event)
       throws IOException, SQLException, InterruptedException
@@ -132,7 +138,10 @@ public class AdminManager
       lvUsers.getItems().add(rs.getString("email"));
     }
   }
-
+  
+  /*
+   * opens form for adding a new user to the DB
+   */
   @FXML
   void OpenAddUser(ActionEvent event) throws IOException
   {
@@ -154,7 +163,10 @@ public class AdminManager
       }
     });
   }
-
+  
+  /*
+   * opens form for modding an user on the DB
+   */
   @FXML
   void OpenModUser(ActionEvent event) throws IOException, SQLException
   {
@@ -177,7 +189,10 @@ public class AdminManager
       }
     });
   }
-
+  
+  /*
+   * deletes user from the db
+   */
   @FXML
   void DeleteUser(ActionEvent event) throws SQLException, IOException
   {
@@ -205,7 +220,10 @@ public class AdminManager
       alert.showAndWait();
     }
   }
-
+  
+  /*
+   * goes back to previous page (normal user homepage)
+   */
   @FXML
   void BackToUserManager(ActionEvent event) throws IOException
   {
