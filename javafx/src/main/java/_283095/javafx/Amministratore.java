@@ -1,6 +1,6 @@
 package _283095.javafx;
 
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -81,37 +81,53 @@ public class Amministratore extends Persona
       throws SQLException
   {
 
-    Statement stmt = DBManager.getConnection().createStatement();
-    ResultSet rs = stmt.executeQuery(
-        "SELECT ATTIVITA.name FROM ATTIVITA WHERE ATTIVITA.name = '"
-            + activityName + "'");
-
-    if (rs.next() == false)
+    PreparedStatement updateStm;
+    try
     {
-      Statement updateStm = DBManager.getConnection().createStatement();
-      DBManager.getConnection().setAutoCommit(false); // start transaction block
+      DBManager.getConnection().setAutoCommit(false);
+      updateStm = DBManager.getConnection().prepareStatement(
+          "INSERT INTO `ATTIVITA`(`name`, `tipologia`) VALUES ('" + activityName
+              + "','" + tipologia + "')");
+
+      boolean result = updateStm.execute();
+
+      DBManager.getConnection().commit();
+      DBManager.getConnection().setAutoCommit(true);
+
+      if (result == false)
+        return true;
+
+    }
+    catch (SQLException e)
+    {
+      System.out.println("Errore query, attività Esistente");
+      return false;
+    }
+    return false;
+
+  }
+
+  public boolean removeAttivita(String activityName)
+  {
+    Statement updateStm;
+    try
+    {
+      updateStm = DBManager.getConnection().createStatement();
+      DBManager.getConnection().setAutoCommit(false);
+
       int result = updateStm
-          .executeUpdate("INSERT INTO `ATTIVITA`(`name`, `tipologia`) VALUES ('"
-              + activityName + "','" + tipologia + "')");
+          .executeUpdate("DELETE FROM `ATTIVITA` WHERE ATTIVITA.name = '"
+              + activityName + "'");
+
       DBManager.getConnection().commit();
       DBManager.getConnection().setAutoCommit(true);
       if (result == 1)
         return true;
     }
-    return false;
-  }
-
-  public boolean removeAttivita(String activityName) throws SQLException
-  {
-    Statement updateStm = DBManager.getConnection().createStatement();
-    DBManager.getConnection().setAutoCommit(false); // start transaction block
-    int result = updateStm.executeUpdate(
-        "DELETE FROM `ATTIVITA` WHERE ATTIVITA.name = '" + activityName + "'");
-
-    DBManager.getConnection().commit();
-    DBManager.getConnection().setAutoCommit(true);
-    if (result == 1)
-      return true;
+    catch (SQLException e)
+    {
+      return false;
+    } // start transaction block
 
     return false;
 

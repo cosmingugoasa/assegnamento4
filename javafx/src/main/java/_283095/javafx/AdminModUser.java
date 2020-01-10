@@ -68,6 +68,7 @@ public class AdminModUser
   @FXML
   void ModUser(ActionEvent event) throws SQLException
   {
+    lConfirmStatus.setText("");// clear label
     String ruolo;
     if (cbAdmin.isSelected())
     {

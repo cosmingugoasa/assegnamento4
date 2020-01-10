@@ -41,6 +41,7 @@ public class AdminAddUser
   @FXML
   void AddUser(ActionEvent event) throws SQLException, IOException
   {
+    lConfirmStatus.setText("");
     if (tfUserMail.getText().contains("@") && !tfUserName.getText().isEmpty()
         && !tfUserSurname.getText().isEmpty()
         && !tfUserPassword.getText().isEmpty())

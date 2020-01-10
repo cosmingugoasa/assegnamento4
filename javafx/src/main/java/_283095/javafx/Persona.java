@@ -50,17 +50,6 @@ public class Persona
 
   public boolean Iscriviti(String item) throws SQLException
   {
-    /*Statement stmtActivity = DBManager.getConnection().createStatement();
-    Statement stmtEmail = DBManager.getConnection().createStatement();
-    ResultSet activity = stmtActivity.executeQuery(
-        "SELECT ATTIVITA.name FROM ATTIVITA WHERE ATTIVITA.name = '" + item
-            + "'");
-    ResultSet userEmail = stmtEmail.executeQuery(
-        "SELECT PERSONA.email FROM PERSONA WHERE PERSONA.email = '" + email
-            + "'");
-    // Check if email and activity are in this time present
-    if (activity.next() == true && userEmail.next() == true)
-    {*/
     // start transaction block
     PreparedStatement updateStm;
     try

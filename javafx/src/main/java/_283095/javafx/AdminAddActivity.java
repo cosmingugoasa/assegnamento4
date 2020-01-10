@@ -52,6 +52,7 @@ public class AdminAddActivity
   @FXML
   void addActivity(ActionEvent event) throws SQLException, IOException
   {
+    lbStatus.setText("");
     if (cbCourse.isSelected()
         || cbRace.isSelected() && !tbNameActivity.getText().isEmpty())
     {
